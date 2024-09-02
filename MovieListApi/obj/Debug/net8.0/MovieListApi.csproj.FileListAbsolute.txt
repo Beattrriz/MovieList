@@ -31,3 +31,4 @@ D:\Dotnet\Lista-Filmes\MovieListApi\obj\Debug\net8.0\refint\MovieListApi.dll
 D:\Dotnet\Lista-Filmes\MovieListApi\obj\Debug\net8.0\MovieListApi.pdb
 D:\Dotnet\Lista-Filmes\MovieListApi\obj\Debug\net8.0\MovieListApi.genruntimeconfig.cache
 D:\Dotnet\Lista-Filmes\MovieListApi\obj\Debug\net8.0\ref\MovieListApi.dll
+D:\Dotnet\Lista-Filmes\MovieListApi\obj\Debug\net8.0\MovieListApi.sourcelink.json
