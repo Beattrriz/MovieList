@@ -1,0 +1,27 @@
+# ASP.NET Core
+[Bb]in/
+[Oo]bj/
+*.suo
+*.user
+*.userosscache
+*.suo
+*.tmp
+*.log
+
+# Node.js
+/node_modules
+/dist
+*.log
+*.tsbuildinfo
+
+# IDEs
+.idea/
+.vscode/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Misc
+*.env
+*.local
