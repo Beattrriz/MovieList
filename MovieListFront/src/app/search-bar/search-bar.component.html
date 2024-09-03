@@ -1,0 +1,16 @@
+<div>
+  <input [(ngModel)]="query" (keyup.enter)="searchMovies()" placeholder="Search movies" />
+  <div *ngIf="isLoading">Loading...</div>
+  
+  <div *ngIf="errorMessage">{{ errorMessage }}</div>
+
+  <div *ngIf="movies.length > 0">
+    <ul>
+      <li *ngFor="let movie of movies">{{ movie.title }}</li> 
+    </ul>
+  </div>
+
+  <div *ngIf="movies.length === 0 && query && !isLoading">
+    Nenhum filme encontrado.
+  </div>
+</div>
