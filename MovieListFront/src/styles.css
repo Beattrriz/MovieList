@@ -1,1 +1,8 @@
-/* You can add global styles to this file, and also import other style files */
+body {
+    background-color: #121212; /* Preto Suave */
+    color: #ffffff; /* Branco para o texto, se necessário */
+  }
+  
+  .navbar {
+    background-color: #FFA500; /* Laranja */
+  }
