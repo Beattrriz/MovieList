@@ -12,6 +12,6 @@ export class TmdbMovieService {
   constructor(private http: HttpClient) {}
 
   searchMovies(query: string): Observable<Movies[]> {
-    return this.http.get<Movies[]>(`${this.apiUrl}?query=${encodeURIComponent(query)}`);
+    return this.http.get<Movies[]>(`${this.apiUrl}?query=${query}`);
   }
 }

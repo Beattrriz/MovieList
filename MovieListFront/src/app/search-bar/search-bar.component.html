@@ -1,14 +1,15 @@
-<div>
+<div class="search-container">
   <input 
+    class="search-input" 
     type="text" 
     [(ngModel)]="query" 
-    placeholder="Search movies" 
+    placeholder="Pesquisar Filmes" 
     (keyup.enter)="searchMovies()" 
   />
-  <button (click)="searchMovies()">Search</button>
+  <button class="search-button" (click)="searchMovies()">Buscar</button>
 </div>
 
-<div *ngIf="isLoading">Loading...</div>
+<div *ngIf="isLoading">Carregando...</div>
 <div *ngIf="errorMessage">{{ errorMessage }}</div>
 
 <div *ngIf="!isLoading">
@@ -17,7 +18,7 @@
       <h3>{{ movie.title }}</h3>
       <img *ngIf="movie.imageUrl" [src]="movie.imageUrl" alt="{{ movie.title }}" width="200">
       <p>{{ movie.overview }}</p>
-      <p *ngIf="movie.voteAverage">Nota: {{ movie.voteAverage }}</p> <!-- Exibindo a nota -->
+      <p *ngIf="movie.voteAverage">Nota: {{ movie.voteAverage }}</p> 
     </div>
   </div>
   <ng-template #noResults>
