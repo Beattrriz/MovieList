@@ -1,14 +1,25 @@
-namespace MovieListApi.DTOs 
+using Newtonsoft.Json;
+
+namespace MovieListApi.DTOs
 {
     public class MovieResponse
     {
-        public List<MovieResult> Results { get; set; }
+        [JsonProperty("results")]
+        public List<Movie> Results { get; set; }
     }
 
-    public class MovieResult
+    public class Movie
     {
-        public string Title { get; set; }
-        public string PosterPath { get; set; }  
-        public string Overview { get; set; }
+        [JsonProperty("title")]
+        public string? Title { get; set; }
+
+        [JsonProperty("poster_path")]
+        public string? PosterPath { get; set; }
+
+        [JsonProperty("overview")]
+        public string? Overview { get; set; }
+
+        [JsonProperty("vote_average")]
+        public double? VoteAverage { get; set; }
     }
 }

@@ -1,27 +1,37 @@
+using System.Net.Http.Headers;
+using Microsoft.Extensions.Options;
+using MovieListApi.Configurations;
+using MovieListApi.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddHttpClient<TmdbService>();
+builder.Services.Configure<ConfigurationResponse>(builder.Configuration.GetSection("TmdbConfiguration"));
+builder.Services.AddHttpClient<TmdbService>((serviceProvider, client) =>
+{
+  
+    var config = serviceProvider.GetRequiredService<IOptions<ConfigurationResponse>>().Value.Images;
+    
+    client.BaseAddress = new Uri(config.SecureBaseUrl);
+    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+});
 
+
+builder.Services.AddControllers();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowSpecificOrigins",
-        builder =>
+        policyBuilder =>
         {
-            builder.WithOrigins("http://localhost:4200") 
-                   .AllowAnyHeader()
-                   .AllowAnyMethod();
+            policyBuilder.WithOrigins("http://localhost:4200")
+                         .AllowAnyHeader()
+                         .AllowAnyMethod();
         });
 });
-
-builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -30,10 +40,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseAuthorization();
-
 app.UseCors("AllowSpecificOrigins");
 
 app.MapControllers();
 
 app.Run();
-

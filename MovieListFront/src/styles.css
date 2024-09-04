@@ -1,8 +1,6 @@
+@import '../node_modules/bootstrap-icons/font/bootstrap-icons.css';
+
 body {
-    background-color: #121212; /* Preto Suave */
-    color: #ffffff; /* Branco para o texto, se necessário */
-  }
+  background-color: #121212 !important;
+}
   
-  .navbar {
-    background-color: #FFA500; /* Laranja */
-  }

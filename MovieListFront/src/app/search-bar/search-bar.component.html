@@ -11,14 +11,18 @@
 <div *ngIf="isLoading">Loading...</div>
 <div *ngIf="errorMessage">{{ errorMessage }}</div>
 
-<div *ngIf="!isLoading && movies.length">
-  <div *ngFor="let movie of movies">
-    <h3>{{ movie.title }}</h3>
-    <img *ngIf="movie.imageUrl" [src]="movie.imageUrl" alt="{{ movie.title }}" width="200">
-    <p>{{ movie.overview }}</p>
+<div *ngIf="!isLoading">
+  <div *ngIf="movies.length; else noResults">
+    <div *ngFor="let movie of movies">
+      <h3>{{ movie.title }}</h3>
+      <img *ngIf="movie.imageUrl" [src]="movie.imageUrl" alt="{{ movie.title }}" width="200">
+      <p>{{ movie.overview }}</p>
+      <p *ngIf="movie.voteAverage">Nota: {{ movie.voteAverage }}</p> <!-- Exibindo a nota -->
+    </div>
   </div>
-</div>
-
-<div *ngIf="!isLoading && movies.length === 0 && query">
-  Nenhum filme encontrado.
+  <ng-template #noResults>
+    <div *ngIf="query">
+      Nenhum filme encontrado.
+    </div>
+  </ng-template>
 </div>

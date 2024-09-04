@@ -1,4 +1,3 @@
 import { Movies } from "./movies.model";
-export interface MoviesResponse {
-    results: Movies[];
-  }
+
+export type MoviesResponse = Movies[];

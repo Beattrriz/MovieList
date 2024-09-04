@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using MovieListApi.Services;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -12,9 +13,16 @@ public class MoviesController : ControllerBase
     }
 
     [HttpGet("search")]
-    public async Task<IActionResult> SearchMovies(string query)
+    public async Task<IActionResult> SearchMovies([FromQuery] string query)
     {
-        var result = await _tmdbService.GetMoviesAsync(query);
-        return Ok(result);
+        try
+        {
+            var movies = await _tmdbService.GetMoviesAsync(query);
+            return Ok(movies);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"Internal server error: {ex.Message}");
+        }
     }
 }
