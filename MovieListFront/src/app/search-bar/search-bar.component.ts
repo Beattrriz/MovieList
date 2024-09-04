@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { TmdbMovieService } from '../service/tmdb-movie.service';
+import { Movies } from '../_models/movies.model';
+import { MoviesResponse } from '../_models/movies-response.model';  // Corrigido para MoviesResponse
 
 @Component({
   selector: 'app-search-bar',
@@ -12,7 +14,7 @@ import { TmdbMovieService } from '../service/tmdb-movie.service';
 })
 export class SearchBarComponent {
   query: string = '';
-  movies: any[] = [];
+  movies: Movies[] = [];  
   isLoading: boolean = false;
   errorMessage: string = '';
 
@@ -23,8 +25,8 @@ export class SearchBarComponent {
     this.errorMessage = '';
     if (this.query.trim()) {
       this.tmdbMovieService.searchMovies(this.query).subscribe(
-        (data: any) => {
-          this.movies = data.results; // Ajuste conforme a estrutura dos dados retornados
+        (data: MoviesResponse) => {
+          this.movies = data.results; 
           this.isLoading = false;
         },
         (error: any) => {

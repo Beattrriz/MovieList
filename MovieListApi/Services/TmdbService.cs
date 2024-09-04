@@ -1,3 +1,9 @@
+using Newtonsoft.Json;
+using System.Net.Http;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+using System.Linq;
+using MovieListApi.DTOs;
 public class TmdbService
 {
     private readonly HttpClient _httpClient;
@@ -8,10 +14,21 @@ public class TmdbService
         _httpClient = httpClient;
     }
 
-    public async Task<string> GetMoviesAsync(string query)
+    public async Task<List<MovieDto>> GetMoviesAsync(string query)
     {
         var response = await _httpClient.GetStringAsync($"https://api.themoviedb.org/3/search/movie?api_key={_apiKey}&query={query}");
-        return response;
+        var data = JsonConvert.DeserializeObject<MovieResponse>(response);
 
+        if (data?.Results == null)
+        {
+            return new List<MovieDto>();  // Retorna uma lista vazia se os resultados forem nulos
+        }
+
+        return data.Results.Select(movie => new MovieDto
+        {
+            Title = movie.Title,
+            ImageUrl = $"https://image.tmdb.org/t/p/w500{movie.PosterPath}", 
+            Overview = movie.Overview
+        }).ToList();
     }
 }
