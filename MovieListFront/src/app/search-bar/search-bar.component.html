@@ -9,16 +9,21 @@
   <button class="search-button" (click)="searchMovies()">Buscar</button>
 </div>
 
-<div *ngIf="isLoading">Carregando...</div>
-<div *ngIf="errorMessage">{{ errorMessage }}</div>
+<div *ngIf="isLoading" class="loading">Carregando...</div>
+<div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
 
 <div *ngIf="!isLoading">
-  <div *ngIf="movies.length; else noResults">
-    <div *ngFor="let movie of movies">
-      <h3>{{ movie.title }}</h3>
-      <img *ngIf="movie.imageUrl" [src]="movie.imageUrl" alt="{{ movie.title }}" width="200">
-      <p>{{ movie.overview }}</p>
-      <p *ngIf="movie.voteAverage">Nota: {{ movie.voteAverage }}</p> 
+  <div *ngIf="movies.length; else noResults" class="movie-grid">
+    <div *ngFor="let movie of movies" class="movie-card">
+      <img *ngIf="movie.imageUrl" [src]="movie.imageUrl" alt="{{ movie.title }}" class="movie-poster">
+      <div class="movie-info">
+        <h3>{{ movie.title }}</h3>
+        <p>{{ movie.overview }}</p>
+        <p *ngIf="movie.voteAverage">Nota: {{ movie.voteAverage }}</p>
+        <button (click)="toggleFavorite(movie)" class="btn btn-link">
+          <i class="bi bi-heart" [ngClass]="{'text-danger': isFavorite(movie)}"></i>
+        </button>
+      </div>
     </div>
   </div>
   <ng-template #noResults>

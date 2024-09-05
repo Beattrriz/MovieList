@@ -25,6 +25,7 @@ namespace MovieListApi.Services
 
             return data.Results.Select(movie => new MovieDto
             {
+                Id = movie.Id,
                 Title = movie.Title,
                 ImageUrl = !string.IsNullOrEmpty(movie.PosterPath) 
                     ? $"https://image.tmdb.org/t/p/w500{movie.PosterPath}"

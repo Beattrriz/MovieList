@@ -56,3 +56,12 @@
   background-color: #4a00e0; 
   border-color: #4a00e0;
 }
+
+.dropdown-item {
+  text-decoration: none; 
+}
+
+.dropdown-item:hover {
+  text-decoration: underline; 
+  cursor: pointer;
+}

@@ -29,3 +29,53 @@
     background: linear-gradient(to right, #6a00b4, #9c2fd5); 
     border-color: #aaa; 
   }
+
+  .loading {
+    text-align: center;
+    font-size: 1.2rem;
+  }
+  
+  .error-message {
+    color: red;
+    text-align: center;
+    font-size: 1rem;
+  }
+  
+  .movie-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  
+  .movie-card {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 0.25rem;
+    padding: 10px;
+    width: 200px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .movie-poster {
+    width: 100%;
+    height: auto;
+  }
+  
+  .movie-info {
+    padding: 10px;
+  }
+  
+  .btn-link {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+  }
+  
+  .bi-heart {
+    font-size: 1.5rem;
+  }
+  
+  .text-danger {
+    color: red;
+  }

@@ -1,10 +1,12 @@
 using Microsoft.AspNetCore.Mvc;
 using MovieListApi.Services;
 
-[ApiController]
-[Route("api/[controller]")]
-public class MoviesController : ControllerBase
+namespace MovieListApi.Controllers
 {
+    [ApiController]
+    [Route("api/[controller]")]
+    public class MoviesController : ControllerBase
+    {
     private readonly TmdbService _tmdbService;
 
     public MoviesController(TmdbService tmdbService)
@@ -25,4 +27,6 @@ public class MoviesController : ControllerBase
             return StatusCode(500, $"Internal server error: {ex.Message}");
         }
     }
+}
+
 }

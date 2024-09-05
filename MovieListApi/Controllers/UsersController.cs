@@ -1,9 +1,14 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MovieListApi.Data;
 using MovieListApi.DTOs;
 using MovieListApi.Entite;
+using System.Security.Claims;
 using System.Security.Cryptography;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,11 +18,57 @@ namespace MovieListApi.Controllers
     [Route("api/[controller]")]
     public class UsersController : ControllerBase
     {
-        private readonly DataContext _context;
+                private readonly DataContext _context;
+        private readonly IConfiguration _configuration;
 
-        public UsersController(DataContext context)
+        public UsersController(DataContext context, IConfiguration configuration)
         {
             _context = context;
+            _configuration = configuration;
+        }
+
+        [HttpPost("login")]
+public async Task<IActionResult> Login([FromBody] LoginDto loginDto)
+{
+    var user = await _context.Users.SingleOrDefaultAsync(u => u.Email == loginDto.Email);
+    if (user == null || !VerifyPasswordHash(loginDto.Password, user.PasswordHash))
+    {
+        return Unauthorized("Credenciais inválidas.");
+    }
+
+    var token = GenerateJwtToken(user);
+    return Ok(new { token, user });
+}
+
+        private bool VerifyPasswordHash(string password, string storedHash)
+{
+    using (var sha256 = SHA256.Create())
+    {
+        var computedHash = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
+        return Convert.ToBase64String(computedHash) == storedHash;
+    }
+}
+
+        private string GenerateJwtToken(User user)
+        {
+            var claims = new[]
+            {
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new Claim(ClaimTypes.Name, user.Email)
+            };
+
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+            var token = new JwtSecurityToken(
+                issuer: _configuration["Jwt:Issuer"],
+                audience: _configuration["Jwt:Audience"],
+                claims: claims,
+                expires: DateTime.Now.AddDays(1),
+                signingCredentials: creds
+            );
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
         [HttpGet]
@@ -35,6 +86,25 @@ namespace MovieListApi.Controllers
             {
                 return NotFound();
             }
+            return Ok(user);
+        }
+
+        [HttpGet("current")]
+        [Authorize] 
+        public async Task<IActionResult> GetCurrentUser()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (userId == null)
+            {
+                return Unauthorized();
+            }
+
+            var user = await _context.Users.FindAsync(int.Parse(userId));
+            if (user == null)
+            {
+                return NotFound();
+            }
+
             return Ok(user);
         }
 
@@ -68,31 +138,26 @@ public async Task<IActionResult> CreateUser([FromBody] UserRegisterDto userDto)
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateUser(int id, [FromBody] UserRegisterDto userDto)
         {
-            // Verifica se o ID no URL corresponde ao ID no DTO
             if (id <= 0)
             {
                 return BadRequest("ID inválido.");
             }
 
-            // Procura o usuário no banco de dados
             var user = await _context.Users.FindAsync(id);
             if (user == null)
             {
                 return NotFound();
             }
 
-            // Atualiza as propriedades do usuário
             user.FirstName = userDto.FirstName;
             user.LastName = userDto.LastName;
             user.Email = userDto.Email;
 
-            // Atualiza a senha se fornecida
             if (!string.IsNullOrWhiteSpace(userDto.Password))
             {
                 user.PasswordHash = HashPassword(userDto.Password);
             }
 
-            // Marca a entidade como modificada e salva as alterações
             _context.Entry(user).State = EntityState.Modified;
             try
             {

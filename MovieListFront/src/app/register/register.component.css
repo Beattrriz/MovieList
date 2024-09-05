@@ -8,8 +8,7 @@ button{
     border: 1px solid #cccccc; 
     border-radius: 4px; 
     background: linear-gradient(to right, #4a00e0, #8e2de2); 
-    color: white; 
-    margin-left: 0.5rem; 
+    color: white;
     cursor: pointer; 
     transition: background 0.3s ease; 
 }

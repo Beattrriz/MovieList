@@ -7,5 +7,7 @@ namespace MovieListApi.Entite
         public string LastName { get; set; }
         public string Email { get; set; } 
         public string PasswordHash { get; set; } 
+
+        public ICollection<FavoriteMovie> FavoriteMovies { get; set; }
     }
 }

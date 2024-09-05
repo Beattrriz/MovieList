@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../service/auth.service';
-import { User } from '../_models/user.models';
+import { CreateUser } from '../_models/create-user.model';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -12,7 +12,7 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
-  user: User = {
+  user:  CreateUser = {
     firstName: '',
     lastName: '',
     email: '',

@@ -1,0 +1,10 @@
+<div>
+  <h2>Meus Filmes Favoritos</h2>
+  <ul>
+    <li *ngFor="let favorite of favorites">
+      Filme ID: {{ favorite.movieId }} 
+  
+      <button (click)="removeFavorite(favorite.movieId)">Remover dos Favoritos</button>
+    </li>
+  </ul>
+</div>

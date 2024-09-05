@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MovieSearchService } from '../service/movie-search.service';
+import { FavoriteMovieService } from '../service/favorite-movie.service';
 import { Movies } from '../_models/movies.model';
+import { AuthService } from '../service/auth.service';
 
 @Component({
   selector: 'app-search-bar',
@@ -12,32 +14,79 @@ import { Movies } from '../_models/movies.model';
   styleUrls: ['./search-bar.component.css']
 })
 export class SearchBarComponent implements OnInit {
-  query: string = '';
   movies: Movies[] = [];
+  query: string = '';
   isLoading: boolean = false;
   errorMessage: string = '';
+  userId: number | null = null;
 
-  constructor(private movieSearchService: MovieSearchService) {}
+  constructor(
+    private movieSearchService: MovieSearchService,
+    private authService: AuthService,
+    private favoriteService: FavoriteMovieService
+  ) {}
 
   ngOnInit() {
+    this.authService.getCurrentUserId().subscribe(
+      id => {
+        this.userId = id;
+      },
+      error => {
+        console.error('Erro ao obter o ID do usuário', error);
+        this.userId = null;
+      }
+    );
 
-    this.movieSearchService.movies$.subscribe(movies => {
-      this.movies = movies;
-      this.isLoading = false;
-      this.errorMessage = movies.length === 0 && this.query ? 'Nenhum filme encontrado.' : '';
-    });
+    this.movieSearchService.movies$.subscribe(
+      movies => {
+        this.movies = movies;
+        this.isLoading = false;
+        this.errorMessage = movies.length === 0 && this.query ? 'Nenhum filme encontrado.' : '';
+      },
+      error => {
+        this.isLoading = false;
+        this.errorMessage = 'Erro ao buscar filmes.';
+        console.error('Erro ao buscar filmes', error);
+      }
+    );
   }
 
   searchMovies() {
     if (this.query.trim()) {
       this.isLoading = true;
       this.errorMessage = '';
-      
-
       this.movieSearchService.searchMovies(this.query);
     } else {
       this.movies = [];
       this.isLoading = false;
     }
+  }
+
+  toggleFavorite(movie: Movies) {
+    if (this.authService.isAuthenticated() && this.userId !== null) {
+      this.favoriteService.toggleFavorite(movie, this.userId).subscribe(
+        () => {
+          
+          this.movies = [...this.movies];
+        },
+        error => console.error('Erro ao atualizar favoritos', error)
+      );
+    } else {
+      this.authService.redirectToLogin(); 
+    }
+  }
+
+  isFavorite(movie: Movies): boolean {
+    if (this.userId !== null) {
+      let isFavorite = false;
+      this.favoriteService.isFavorite(movie, this.userId).subscribe(
+        favoriteStatus => {
+          isFavorite = favoriteStatus;
+        },
+        error => console.error('Erro ao verificar favoritos', error)
+      );
+      return isFavorite; 
+    }
+    return false;
   }
 }
