@@ -1,9 +1,10 @@
 .navbar {
   display: flex;
-  justify-content: center; /* Centraliza o conteúdo no container */
+  justify-content: center; 
+  background: linear-gradient(to right, #4a00e0, #8e2de2); 
 }
 
-.container {
+.container-fluid {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -13,8 +14,45 @@
 .navbar-brand {
   display: flex;
   align-items: center;
+  color: white;
+  margin-right: 1rem; 
+}
+
+.form-inline {
+  display: flex;
+  align-items: center; 
+}
+
+.form-control {
+  margin-left: 0.5rem; 
+  padding: 0.5rem;
+  border-radius: 0.25rem;
 }
 
 .navbar-toggler {
   margin-left: auto; 
+}
+
+.nav-link {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  font-size: 1rem; 
+  color: #fff; 
+  background-color: #8e2de2; 
+  border: 1px solid white; 
+  border-radius: 0.25rem; 
+  text-align: center; 
+  text-decoration: none; 
+  cursor: pointer; 
+  transition: background-color 0.2s ease, border-color 0.2s ease; 
+}
+
+.nav-link:hover {
+  background-color: #4a00e0; 
+  border-color: #4a00e0; 
+}
+
+.nav-link:active {
+  background-color: #4a00e0; 
+  border-color: #4a00e0;
 }

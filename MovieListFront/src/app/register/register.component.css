@@ -1,19 +1,8 @@
-.search-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .search-input {
-    flex: 1; 
-    max-width: 600px; 
-    padding: 0.5rem; 
-    font-size: 1rem; 
-    border: 1px solid #cccccc; 
-    border-radius: 4px; 
-  }
-  
-  .search-button {
+.container{
+    color: white;
+}
+
+button{
     padding: 0.5rem 1rem; 
     font-size: 1rem; 
     border: 1px solid #cccccc; 
@@ -23,9 +12,9 @@
     margin-left: 0.5rem; 
     cursor: pointer; 
     transition: background 0.3s ease; 
-  }
-  
-  .search-button:hover {
+}
+
+button:hover{
     background: linear-gradient(to right, #6a00b4, #9c2fd5); 
     border-color: #aaa; 
-  }
+}

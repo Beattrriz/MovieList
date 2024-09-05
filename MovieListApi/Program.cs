@@ -2,8 +2,13 @@ using System.Net.Http.Headers;
 using Microsoft.Extensions.Options;
 using MovieListApi.Configurations;
 using MovieListApi.Services;
+using MovieListApi.Data;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddDbContext<DataContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("ConexaoPadrao")));
 
 builder.Services.Configure<ConfigurationResponse>(builder.Configuration.GetSection("TmdbConfiguration"));
 builder.Services.AddHttpClient<TmdbService>((serviceProvider, client) =>

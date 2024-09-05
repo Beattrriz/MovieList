@@ -18,7 +18,7 @@ export class MovieSearchService {
         this.moviesSubject.next(movies);
       },
       (error: any) => {
-        console.error('Error fetching movies', error);
+        console.error('Erro ao buscar filmes', error);
         this.moviesSubject.next([]);
       }
     );

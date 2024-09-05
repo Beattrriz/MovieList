@@ -4,7 +4,6 @@ import { routes } from './app.routes';
 import { provideHttpClient } from '@angular/common/http';
 import { TmdbMovieService } from './service/tmdb-movie.service';
 
-
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
