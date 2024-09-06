@@ -1,81 +1,142 @@
 .search-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .search-input {
-    flex: 1; 
-    max-width: 600px; 
-    padding: 0.5rem; 
-    font-size: 1rem; 
-    border: 1px solid #cccccc; 
-    border-radius: 4px; 
-  }
-  
-  .search-button {
-    padding: 0.5rem 1rem; 
-    font-size: 1rem; 
-    border: 1px solid #cccccc; 
-    border-radius: 4px; 
-    background: linear-gradient(to right, #4a00e0, #8e2de2); 
-    color: white; 
-    margin-left: 0.5rem; 
-    cursor: pointer; 
-    transition: background 0.3s ease; 
-  }
-  
-  .search-button:hover {
-    background: linear-gradient(to right, #6a00b4, #9c2fd5); 
-    border-color: #aaa; 
-  }
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
 
-  .loading {
-    text-align: center;
-    font-size: 1.2rem;
-  }
-  
-  .error-message {
-    color: red;
-    text-align: center;
-    font-size: 1rem;
-  }
-  
+.search-input {
+  flex: 1; 
+  max-width: 600px; 
+  padding: 0.5rem; 
+  font-size: 1rem; 
+  border: 1px solid #cccccc; 
+  border-radius: 4px; 
+}
+
+.search-button {
+  padding: 0.5rem 1rem; 
+  font-size: 1rem; 
+  border: 1px solid #cccccc; 
+  border-radius: 4px; 
+  background: linear-gradient(to right, #4a00e0, #8e2de2); 
+  color: white; 
+  margin-left: 0.5rem; 
+  cursor: pointer; 
+  transition: background 0.3s ease; 
+}
+
+.search-button:hover {
+  background: linear-gradient(to right, #6a00b4, #9c2fd5); 
+  border-color: #aaa; 
+}
+
+.loading {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #4a00e0;
+  margin-top: 1rem;
+}
+
+.error-message {
+  color: red;
+  text-align: center;
+  font-size: 1rem;
+  margin-top: 1rem;
+}
+
+.movie-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.movie-card {
+  background-color: #1e1e1e; /* Cor de fundo escura */
+  border: 1px solid #333; /* Borda escura */
+  border-radius: 0.25rem;
+  padding: 10px;
+  width: 100%;
+  max-width: 300px; /* Largura máxima do card */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Sombra escura */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.movie-poster {
+  width: 100%;
+  height: auto;
+  border-radius: 0.25rem;
+}
+
+.movie-info {
+  padding: 10px;
+  text-align: center;
+  color: #e0e0e0; /* Texto claro para contraste com o fundo escuro */
+}
+
+.movie-title {
+  font-size: 1.25rem;
+  margin: 0.5rem 0;
+}
+
+.movie-overview {
+  font-size: 0.875rem;
+  color: #b0b0b0; /* Texto um pouco mais claro */
+  margin: 0.5rem 0;
+}
+
+.movie-details {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.875rem;
+  color: #b0b0b0;
+}
+
+.movie-rating {
+  margin-right: 0.5rem;
+}
+
+.btn-link {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.bi-heart {
+  font-size: 1.5rem;
+  transition: color 0.3s ease;
+}
+
+.text-danger {
+  color: red;
+}
+
+/* Responsividade: 3 filmes por linha em dispositivos grandes */
+@media (min-width: 992px) {
   .movie-grid {
-    display: flex;
-    flex-wrap: wrap;
+    grid-template-columns: repeat(3, 1fr); /* 3 filmes por coluna */
     gap: 20px;
   }
-  
-  .movie-card {
-    background-color: #f8f9fa;
-    border: 1px solid #dee2e6;
-    border-radius: 0.25rem;
-    padding: 10px;
-    width: 200px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsividade: 2 filmes por linha em dispositivos médios */
+@media (min-width: 768px) and (max-width: 991px) {
+  .movie-grid {
+    grid-template-columns: repeat(2, 1fr); /* 2 filmes por coluna */
+    gap: 20px;
   }
-  
-  .movie-poster {
-    width: 100%;
-    height: auto;
+}
+
+/* Responsividade: 1 filme por linha em dispositivos pequenos */
+@media (max-width: 767px) {
+  .movie-grid {
+    grid-template-columns: 1fr; /* 1 filme por coluna */
+    gap: 20px;
   }
-  
-  .movie-info {
-    padding: 10px;
-  }
-  
-  .btn-link {
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-  }
-  
-  .bi-heart {
-    font-size: 1.5rem;
-  }
-  
-  .text-danger {
-    color: red;
-  }
+}

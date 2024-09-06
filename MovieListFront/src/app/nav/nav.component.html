@@ -3,10 +3,23 @@
     <a class="navbar-brand" routerLink="/">
       <i class="bi bi-film me-2"></i> Find Movies
     </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
+    <div class="d-flex flex-grow-1 d-lg-none justify-content-end">
+      <ng-container *ngIf="!isLoggedIn(); else loggedInMenu">
+        <a class="nav-link" routerLink="/login">Entrar</a>
+      </ng-container>
+      <ng-template #loggedInMenu>
+        <div class="dropdown d-inline">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMobile" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            {{ user?.firstName }}
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMobile">
+            <a class="dropdown-item" routerLink="/favorites">Favoritos</a>
+            <a class="dropdown-item" (click)="logout()">Sair</a>
+          </div>
+        </div>
+      </ng-template>
+    </div>
+    <div class="collapse navbar-collapse d-none d-lg-flex" id="navbarNav">
       <form class="d-flex ms-auto my-2 my-lg-0 form-inline" (ngSubmit)="searchMovies()">
         <input 
           class="form-control" 
@@ -22,9 +35,6 @@
       <ul class="navbar-nav ms-auto">
         <li class="nav-item" *ngIf="!isLoggedIn()">
           <a class="nav-link" routerLink="/login">Entrar</a>
-        </li>
-        <li class="nav-item" *ngIf="!isLoggedIn()">
-          <a class="nav-link" routerLink="/register">Cadastre-se</a>
         </li>
         <li class="nav-item dropdown" *ngIf="isLoggedIn()">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

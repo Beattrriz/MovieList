@@ -1,0 +1,21 @@
+<div *ngIf="movie$ | async as movie">
+    <h1>{{ movie.title }}</h1>
+  
+    <!-- Imagem do poster do filme -->
+    <img *ngIf="movie.posterPath" 
+         [src]="`https://image.tmdb.org/t/p/w500${movie.posterPath}`" 
+         alt="{{ movie.title }}" 
+         class="movie-poster">
+  
+    <!-- Sinopse do filme -->
+    <p>{{ movie.overview }}</p>
+    
+    <!-- Nota do filme -->
+    <p><strong>Nota:</strong> {{ movie.voteAverage }}</p>
+    
+    <!-- Botão para adicionar/remover dos favoritos -->
+    <button (click)="toggleFavorite(movie)" class="favorite-button">
+      <i class="bi" [ngClass]="{'bi-heart-fill text-danger': isFavorite, 'bi-heart': !isFavorite}"></i>
+      {{ isFavorite ? 'Remover dos Favoritos' : 'Adicionar aos Favoritos' }}
+    </button>
+  </div>

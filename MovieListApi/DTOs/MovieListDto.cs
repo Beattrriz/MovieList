@@ -7,6 +7,8 @@ namespace MovieListApi.DTOs
         public string? ImageUrl { get; set; }
         public string? Overview { get; set; }
         public double? VoteAverage { get; set; }
+        public string? ReleaseDate { get; set; }
+        public List<int>? Genres { get; set; }
 
     }
 }

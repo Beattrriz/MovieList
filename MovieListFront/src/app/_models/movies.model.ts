@@ -4,4 +4,6 @@ export interface Movies {
   imageUrl: string | null;
   overview: string;
   voteAverage?: number;
+  releaseDate?: string; 
+  genres?: string[];
 }

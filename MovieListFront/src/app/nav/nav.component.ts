@@ -48,6 +48,8 @@ export class NavComponent implements OnInit {
       this.isLoading = true;
       this.errorMessage = '';
       this.movieSearchService.searchMovies(this.query);
+      this.router.navigate(['/']);
+      this.query = '';
     } else {
       this.movieSearchService.searchMovies(''); 
       this.isLoading = false;

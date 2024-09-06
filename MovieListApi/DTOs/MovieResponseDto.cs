@@ -24,5 +24,11 @@ namespace MovieListApi.DTOs
 
         [JsonProperty("vote_average")]
         public double? VoteAverage { get; set; }
+
+        [JsonProperty("release_date")]
+        public string? ReleaseDate { get; set; }
+        
+        [JsonProperty("genre_ids")]
+        public List<int>? GenreIds { get; set; }
     }
 }
