@@ -18,6 +18,7 @@ import { forkJoin } from 'rxjs';
 export class FavoritesListComponent implements OnInit {
   favorites: Movies[] = [];
   userId: number | null = null;
+  shareLink: string | null = null;
 
   constructor(
     private favoriteMovieService: FavoriteMovieService,
@@ -65,6 +66,19 @@ export class FavoritesListComponent implements OnInit {
         error => {
           console.error('Erro ao remover favorito', error);
         }
+      );
+    } else {
+      console.error('Usuário não autenticado');
+    }
+  }
+
+  generateShareLink(): void {
+    if (this.userId !== null) {
+      this.favoriteMovieService.shareFavorites(this.userId).subscribe(
+        link => {
+          this.shareLink = link;
+        },
+        error => console.error('Erro ao gerar link de compartilhamento', error)
       );
     } else {
       console.error('Usuário não autenticado');

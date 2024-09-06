@@ -48,4 +48,10 @@ export class FavoriteMovieService {
   getMovieDetails(movieId: number): Observable<Movies> {
     return this.http.get<Movies>(`http://localhost:5017/api/Movies/${movieId}`);
   }
+
+  shareFavorites(userId: number): Observable<string> {
+    return this.http.get<{ ShareLink: string }>(`${this.apiUrl}/share/${userId}`).pipe(
+      map(response => response.ShareLink)
+    );
+  }
 }

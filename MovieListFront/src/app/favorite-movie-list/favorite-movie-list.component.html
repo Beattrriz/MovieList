@@ -11,4 +11,11 @@
       </div>
     </li>
   </ul>
+
+  <button (click)="generateShareLink()">Compartilhar Lista</button>
+
+  <div *ngIf="shareLink">
+    <p>Compartilhe este link:</p>
+    <a [href]="shareLink" target="_blank">{{ shareLink }}</a>
+  </div>
 </div>

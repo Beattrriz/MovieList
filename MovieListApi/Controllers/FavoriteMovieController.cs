@@ -8,14 +8,14 @@ namespace MovieListApi.Controllers
     [ApiController]
     public class FavoriteMovieController : ControllerBase
     {
-        private readonly FavoriteMovieService _favoriteMovieService;
+         private readonly IFavoriteMovieService _favoriteMovieService;
 
-        public FavoriteMovieController(FavoriteMovieService favoriteMovieService)
+        public FavoriteMovieController(IFavoriteMovieService favoriteMovieService)
         {
             _favoriteMovieService = favoriteMovieService;
         }
 
-        [HttpPost("add")]
+         [HttpPost("add")]
         public async Task<IActionResult> AddFavoriteMovie([FromQuery] int userId, [FromQuery] int movieId)
         {
             await _favoriteMovieService.AddFavoriteMovie(userId, movieId);
@@ -33,6 +33,31 @@ namespace MovieListApi.Controllers
         public async Task<IActionResult> GetUserFavorites(int userId)
         {
             var favorites = await _favoriteMovieService.GetUserFavorites(userId);
+            return Ok(favorites);
+        }
+
+        [HttpGet("share/{userId}")]
+        public async Task<IActionResult> ShareFavorites(int userId)
+        {
+            var shareLink = await _favoriteMovieService.GenerateShareLink(userId);
+
+            if (string.IsNullOrEmpty(shareLink))
+            {
+                return NotFound();
+            }
+
+            return Ok(new { ShareLink = shareLink });
+        }
+
+        [HttpGet("view-shared-favorites/{userId}")]
+        public async Task<IActionResult> ViewSharedFavorites(int userId)
+        {
+            var favorites = await _favoriteMovieService.GetUserFavorites(userId);
+            if (favorites == null)
+            {
+                return NotFound();
+            }
+
             return Ok(favorites);
         }
     }

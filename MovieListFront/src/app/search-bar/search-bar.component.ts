@@ -5,6 +5,7 @@ import { MovieSearchService } from '../service/movie-search.service';
 import { FavoriteMovieService } from '../service/favorite-movie.service';
 import { Movies } from '../_models/movies.model';
 import { AuthService } from '../service/auth.service';
+import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-search-bar',
@@ -66,27 +67,19 @@ export class SearchBarComponent implements OnInit {
     if (this.authService.isAuthenticated() && this.userId !== null) {
       this.favoriteService.toggleFavorite(movie, this.userId).subscribe(
         () => {
-          
           this.movies = [...this.movies];
         },
         error => console.error('Erro ao atualizar favoritos', error)
       );
     } else {
-      this.authService.redirectToLogin(); 
+      this.authService.redirectToLogin();
     }
   }
 
-  isFavorite(movie: Movies): boolean {
+  isFavorite(movie: Movies): Observable<boolean> {
     if (this.userId !== null) {
-      let isFavorite = false;
-      this.favoriteService.isFavorite(movie, this.userId).subscribe(
-        favoriteStatus => {
-          isFavorite = favoriteStatus;
-        },
-        error => console.error('Erro ao verificar favoritos', error)
-      );
-      return isFavorite; 
+      return this.favoriteService.isFavorite(movie, this.userId);
     }
-    return false;
+    return of(false); 
   }
 }
