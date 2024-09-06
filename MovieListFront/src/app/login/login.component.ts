@@ -20,8 +20,6 @@ export class LoginComponent {
   constructor(private authService: AuthService, private router: Router) {}
 
   onSubmit() {
-    console.log('Tentando fazer login com', this.email, this.password);
-  
     this.authService.login(this.email, this.password).subscribe({
       next: (response) => {
         if (response && response.token) {

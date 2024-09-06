@@ -22,7 +22,7 @@ namespace MovieListApi.Controllers
             return Ok();
         }
 
-        [HttpPost("remove")]
+        [HttpDelete("remove")]
         public async Task<IActionResult> RemoveFavoriteMovie([FromQuery] int userId, [FromQuery] int movieId)
         {
             await _favoriteMovieService.RemoveFavoriteMovie(userId, movieId);

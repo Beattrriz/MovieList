@@ -28,6 +28,8 @@ builder.Services.AddHttpClient<TmdbService>((serviceProvider, client) =>
 
 var jwtSettings = builder.Configuration.GetSection("Jwt").Get<JwtSettings>();
 
+builder.Services.AddScoped<FavoriteMovieService>(); 
+
 builder.Services.AddSingleton(jwtSettings);
 
 builder.Services.AddAuthentication(options =>

@@ -2,9 +2,13 @@
   <h2>Meus Filmes Favoritos</h2>
   <ul>
     <li *ngFor="let favorite of favorites">
-      Filme ID: {{ favorite.movieId }} 
-  
-      <button (click)="removeFavorite(favorite.movieId)">Remover dos Favoritos</button>
+      <div>
+        <h3>{{ favorite.title }}</h3>
+        <img *ngIf="favorite.imageUrl" [src]="favorite.imageUrl" alt="{{ favorite.title }}" style="width: 200px; height: auto;"/>
+        <p>{{ favorite.overview }}</p>
+        <p><strong>Avaliação Média:</strong> {{ favorite.voteAverage | number:'1.1-1' }}</p>
+        <button (click)="removeFavorite(favorite.id)">Remover dos Favoritos</button>
+      </div>
     </li>
   </ul>
 </div>

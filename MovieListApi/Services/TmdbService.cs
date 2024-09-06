@@ -34,5 +34,22 @@ namespace MovieListApi.Services
                 VoteAverage = movie.VoteAverage 
             }).ToList();
         }
+
+        public async Task<MovieDto> GetMovieByIdAsync(int id)
+{
+    var response = await _httpClient.GetStringAsync($"movie/{id}?api_key={_apiKey}");
+    var movie = JsonConvert.DeserializeObject<Movie>(response);
+
+    return new MovieDto
+    {
+        Id = movie.Id,
+        Title = movie.Title,
+        ImageUrl = !string.IsNullOrEmpty(movie.PosterPath) 
+            ? $"https://image.tmdb.org/t/p/w500{movie.PosterPath}"
+            : null,
+        Overview = movie.Overview,
+        VoteAverage = movie.VoteAverage
+    };
+}
     }
 }

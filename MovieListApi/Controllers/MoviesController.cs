@@ -27,6 +27,20 @@ namespace MovieListApi.Controllers
             return StatusCode(500, $"Internal server error: {ex.Message}");
         }
     }
+
+     [HttpGet("{id}")]
+        public async Task<IActionResult> GetMovieById(int id)
+        {
+            try
+            {
+                var movie = await _tmdbService.GetMovieByIdAsync(id);
+                return Ok(movie);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
 }
 
 }

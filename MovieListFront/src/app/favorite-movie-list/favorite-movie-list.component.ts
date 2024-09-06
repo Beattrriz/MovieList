@@ -3,6 +3,10 @@ import { FavoriteMovieService } from '../service/favorite-movie.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { FavoriteMovie } from '../_models/favorite-movie.model'; 
+import { AuthService } from '../service/auth.service';
+import { TmdbMovieService } from '../service/tmdb-movie.service';
+import { Movies } from '../_models/movies.model';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-favorite-movie-list',
@@ -12,34 +16,58 @@ import { FavoriteMovie } from '../_models/favorite-movie.model';
   styleUrls: ['./favorite-movie-list.component.css'] 
 })
 export class FavoritesListComponent implements OnInit {
+  favorites: Movies[] = [];
+  userId: number | null = null;
 
-  favorites: FavoriteMovie[] = []; 
-  userId = 1; 
-
-  constructor(private favoriteMovieService: FavoriteMovieService) { }
+  constructor(
+    private favoriteMovieService: FavoriteMovieService,
+    private authService: AuthService 
+  ) {}
 
   ngOnInit(): void {
-    this.loadFavorites();
+    this.authService.getCurrentUserId().subscribe(userId => {
+      this.userId = userId;
+      if (this.userId !== null) {
+        this.loadFavorites();
+      }
+    });
   }
 
   loadFavorites(): void {
-    this.favoriteMovieService.getUserFavorites(this.userId).subscribe(
-      data => this.favorites = data,
-      error => console.error('Erro ao carregar favoritos', error)
-    );
-  }
-
-  addFavorite(movieId: number): void {
-    this.favoriteMovieService.addFavoriteMovie(this.userId, movieId).subscribe(
-      () => this.loadFavorites(),
-      error => console.error('Erro ao adicionar favorito', error)
-    );
+    if (this.userId !== null) {
+      this.favoriteMovieService.getUserFavorites(this.userId).subscribe(
+        (favoriteIds) => {
+          const movieDetails$ = favoriteIds.map(movieId =>
+            this.favoriteMovieService.getMovieDetails(movieId)
+          );
+          forkJoin(movieDetails$).subscribe(
+            details => {
+              this.favorites = details;
+            },
+            error => {
+              console.error('Erro ao carregar detalhes dos filmes', error);
+            }
+          );
+        },
+        error => {
+          console.error('Erro ao carregar favoritos', error);
+        }
+      );
+    }
   }
 
   removeFavorite(movieId: number): void {
-    this.favoriteMovieService.removeFavoriteMovie(this.userId, movieId).subscribe(
-      () => this.loadFavorites(),
-      error => console.error('Erro ao remover favorito', error)
-    );
+    if (this.userId !== null) {
+      this.favoriteMovieService.removeFavoriteMovie(this.userId, movieId).subscribe(
+        () => {
+          this.favorites = this.favorites.filter(f => f.id !== movieId); 
+        },
+        error => {
+          console.error('Erro ao remover favorito', error);
+        }
+      );
+    } else {
+      console.error('Usuário não autenticado');
+    }
   }
 }
