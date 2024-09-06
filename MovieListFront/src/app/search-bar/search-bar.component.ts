@@ -5,7 +5,8 @@ import { MovieSearchService } from '../service/movie-search.service';
 import { FavoriteMovieService } from '../service/favorite-movie.service';
 import { Movies } from '../_models/movies.model';
 import { AuthService } from '../service/auth.service';
-import { Observable, of } from 'rxjs';
+import { catchError, map, Observable, of } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-search-bar',
@@ -24,7 +25,8 @@ export class SearchBarComponent implements OnInit {
   constructor(
     private movieSearchService: MovieSearchService,
     private authService: AuthService,
-    private favoriteService: FavoriteMovieService
+    private favoriteService: FavoriteMovieService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -67,7 +69,7 @@ export class SearchBarComponent implements OnInit {
     if (this.authService.isAuthenticated() && this.userId !== null) {
       this.favoriteService.toggleFavorite(movie, this.userId).subscribe(
         () => {
-          this.movies = [...this.movies];
+          this.movies = [...this.movies]; 
         },
         error => console.error('Erro ao atualizar favoritos', error)
       );
@@ -80,6 +82,10 @@ export class SearchBarComponent implements OnInit {
     if (this.userId !== null) {
       return this.favoriteService.isFavorite(movie, this.userId);
     }
-    return of(false); 
+    return of(false);
+  }
+
+  goToMovieDetails(movieId: number): void {
+    this.router.navigate(['/movie', movieId]);
   }
 }

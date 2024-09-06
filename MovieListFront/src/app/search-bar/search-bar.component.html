@@ -14,16 +14,19 @@
 
 <div *ngIf="!isLoading">
   <div *ngIf="movies.length; else noResults" class="movie-grid">
-    <div *ngFor="let movie of movies" class="movie-card">
+    <div *ngFor="let movie of movies" class="movie-card" (click)="goToMovieDetails(movie.id)">
       <img *ngIf="movie.imageUrl" [src]="movie.imageUrl" alt="{{ movie.title }}" class="movie-poster">
       <div class="movie-info">
         <h3 class="movie-title">{{ movie.title }}</h3>
-        <p class="movie-overview">{{ movie.overview }}</p>
         <div class="movie-details">
           <div class="movie-rating">
-            <p>Nota: {{ movie.voteAverage }}</p>
-            <button (click)="toggleFavorite(movie)" class="btn btn-link">
-              <i class="bi bi-heart" [ngClass]="{'text-danger': isFavorite(movie)}"></i>
+            <p>Nota TMDB: {{ movie.voteAverage }}</p>
+            <button (click)="toggleFavorite(movie); $event.stopPropagation()" class="btn btn-link">
+              <i class="bi" 
+                 [ngClass]="{ 
+                   'bi-heart-fill text-danger': (isFavorite(movie) | async), 
+                   'bi-heart': !(isFavorite(movie) | async) 
+                 }"></i>
             </button>
           </div>
         </div>

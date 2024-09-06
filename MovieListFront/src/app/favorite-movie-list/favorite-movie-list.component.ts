@@ -72,6 +72,12 @@ export class FavoritesListComponent implements OnInit {
     }
   }
 
+  formatReleaseDate(date?: string | null): string {
+    if (!date) return '';
+    const [year, month, day] = date.split('-');
+    return `${day}/${month}/${year}`;
+  }
+
   generateShareLink(): void {
     if (this.userId !== null) {
       this.favoriteMovieService.shareFavorites(this.userId).subscribe(

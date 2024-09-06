@@ -10,3 +10,13 @@ button{
     cursor: pointer; 
     transition: background 0.3s ease; 
 }
+
+a {
+    color: #007bff; 
+    text-decoration: none; 
+    cursor: pointer; 
+  }
+  
+  a:hover {
+    text-decoration: underline blue; 
+  }

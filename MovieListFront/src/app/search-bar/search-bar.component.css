@@ -54,13 +54,13 @@
 }
 
 .movie-card {
-  background-color: #1e1e1e; /* Cor de fundo escura */
-  border: 1px solid #333; /* Borda escura */
+  background-color: #1e1e1e; 
+  border: 1px solid #333; 
   border-radius: 0.25rem;
   padding: 10px;
   width: 100%;
-  max-width: 300px; /* Largura máxima do card */
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Sombra escura */
+  max-width: 300px; 
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); 
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -75,7 +75,7 @@
 .movie-info {
   padding: 10px;
   text-align: center;
-  color: #e0e0e0; /* Texto claro para contraste com o fundo escuro */
+  color: #e0e0e0; 
 }
 
 .movie-title {
@@ -85,7 +85,7 @@
 
 .movie-overview {
   font-size: 0.875rem;
-  color: #b0b0b0; /* Texto um pouco mais claro */
+  color: #b0b0b0; 
   margin: 0.5rem 0;
 }
 
@@ -117,26 +117,38 @@
   color: red;
 }
 
-/* Responsividade: 3 filmes por linha em dispositivos grandes */
+.movie-rating {
+  bottom: 10px;
+  right: 0;
+  padding: 10px;
+}
+
+.movie-rating i {
+  font-size: 24px;
+  cursor: pointer;
+}
+
+
 @media (min-width: 992px) {
   .movie-grid {
-    grid-template-columns: repeat(3, 1fr); /* 3 filmes por coluna */
+    grid-template-columns: repeat(3, 1fr); 
     gap: 20px;
   }
 }
 
-/* Responsividade: 2 filmes por linha em dispositivos médios */
+
 @media (min-width: 768px) and (max-width: 991px) {
   .movie-grid {
-    grid-template-columns: repeat(2, 1fr); /* 2 filmes por coluna */
+    grid-template-columns: repeat(2, 1fr); 
     gap: 20px;
   }
 }
 
-/* Responsividade: 1 filme por linha em dispositivos pequenos */
 @media (max-width: 767px) {
   .movie-grid {
-    grid-template-columns: 1fr; /* 1 filme por coluna */
+    grid-template-columns: 1fr; 
     gap: 20px;
   }
 }
+
+

@@ -108,7 +108,7 @@ namespace MovieListApi.Controllers
             return Ok(user);
         }
 
-        [HttpPost]
+        [HttpPost("register")] 
         public async Task<IActionResult> CreateUser([FromBody] UserRegisterDto userDto)
         {
             if (!ModelState.IsValid)

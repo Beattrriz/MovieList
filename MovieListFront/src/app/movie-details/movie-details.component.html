@@ -1,21 +1,23 @@
-<div *ngIf="movie$ | async as movie">
-    <h1>{{ movie.title }}</h1>
+<div style="text-align: center; margin-top: 60px;">
+    <h2>Detalhes do Filme</h2>
   
-    <!-- Imagem do poster do filme -->
-    <img *ngIf="movie.posterPath" 
-         [src]="`https://image.tmdb.org/t/p/w500${movie.posterPath}`" 
-         alt="{{ movie.title }}" 
-         class="movie-poster">
-  
-    <!-- Sinopse do filme -->
-    <p>{{ movie.overview }}</p>
-    
-    <!-- Nota do filme -->
-    <p><strong>Nota:</strong> {{ movie.voteAverage }}</p>
-    
-    <!-- Botão para adicionar/remover dos favoritos -->
-    <button (click)="toggleFavorite(movie)" class="favorite-button">
-      <i class="bi" [ngClass]="{'bi-heart-fill text-danger': isFavorite, 'bi-heart': !isFavorite}"></i>
-      {{ isFavorite ? 'Remover dos Favoritos' : 'Adicionar aos Favoritos' }}
-    </button>
+    <div *ngIf="movie$ | async as movie" style="display: flex; align-items: center; justify-content: center; margin-bottom: 20px; padding: 10px; border: 1px solid #ddd; border-radius: 8px;">
+      <img *ngIf="movie.imageUrl" [src]="movie.imageUrl" alt="{{ movie.title }}" style="width: 250px; height: auto; margin-right: 20px; border-radius: 4px;"/>
+      
+      <div style="flex: 1; text-align: left;">
+        <h3>{{ movie.title }}</h3>
+        <p><strong>Data de Lançamento:</strong> {{ formatReleaseDate(movie.releaseDate) }}</p>
+        <p><strong>Sinopse:</strong></p>
+        <p>
+          {{ movie.overview ? movie.overview : 'Descrição não disponível.' }}
+        </p>
+        
+        <div class="remove" style="display: flex; align-items: center; margin-top: 10px;">
+          <p><strong>Nota TMDB:</strong> {{ movie.voteAverage | number:'1.1-1' }}</p>
+          <button (click)="toggleFavorite(movie)" class="remove-button" style="margin-left: 20px;">
+            <i class="bi bi-heart-fill" [ngClass]="{'text-danger': isFavorite}"></i>
+          </button>
+        </div>
+      </div>
+    </div>
   </div>

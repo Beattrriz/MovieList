@@ -1,21 +1,30 @@
-<div>
+<div style="text-align: center; margin-top: 60px;">
   <h2>Meus Filmes Favoritos</h2>
-  <ul>
-    <li *ngFor="let favorite of favorites">
-      <div>
+  <ul style="list-style-type: none; padding: 0; margin: 0 auto; display: inline-block; text-align: left;">
+    <li *ngFor="let favorite of favorites" style="display: flex; align-items: center; margin-bottom: 20px; padding: 10px; border: 1px solid #ddd; border-radius: 8px;">
+      <img *ngIf="favorite.imageUrl" [src]="favorite.imageUrl" alt="{{ favorite.title }}" style="width: 150px; height: auto; margin-right: 20px; border-radius: 4px;"/>
+      
+      <div style="flex: 1;">
         <h3>{{ favorite.title }}</h3>
-        <img *ngIf="favorite.imageUrl" [src]="favorite.imageUrl" alt="{{ favorite.title }}" style="width: 200px; height: auto;"/>
+        <p><strong>Data de Lançamento:</strong> {{ formatReleaseDate(favorite.releaseDate) }}</p>
+        <p><strong>Sinopse:</strong></p>
         <p>{{ favorite.overview }}</p>
-        <p><strong>Avaliação Média:</strong> {{ favorite.voteAverage | number:'1.1-1' }}</p>
-        <button (click)="removeFavorite(favorite.id)">Remover dos Favoritos</button>
+        
+        <div class="remove">
+          <p><strong>Nota TMDB:</strong> {{ favorite.voteAverage | number:'1.1-1' }}</p>
+          <button (click)="removeFavorite(favorite.id)" class="remove-button">
+            <i class="bi bi-heart-fill"></i> 
+          </button>
+        </div>
       </div>
     </li>
   </ul>
 
-  <button (click)="generateShareLink()">Compartilhar Lista</button>
-
-  <div *ngIf="shareLink">
-    <p>Compartilhe este link:</p>
-    <a [href]="shareLink" target="_blank">{{ shareLink }}</a>
+  <div style="margin-top: 20px;">
+    <button (click)="generateShareLink()">Compartilhar Lista</button>
+    <div *ngIf="shareLink" style="margin-top: 10px;">
+      <p>Compartilhe este link:</p>
+      <a [href]="shareLink" target="_blank">{{ shareLink }}</a>
+    </div>
   </div>
 </div>

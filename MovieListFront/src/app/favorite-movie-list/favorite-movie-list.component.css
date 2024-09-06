@@ -1,0 +1,37 @@
+
+div {
+    color: white;
+  }
+  
+  h2 {
+    margin-bottom: 20px;
+  }
+  
+  .remove {
+    display: flex; 
+    align-items: center; 
+    margin-top: 10px;
+  }
+  
+  .remove p {
+    margin-right: 10px; 
+  }
+  
+  .remove-button {
+    border: none;
+    background: none;
+    cursor: pointer;
+    color: #e74c3c;
+    margin-left: 10px; 
+    font-size: 20px; 
+    margin-bottom: 15px;
+  }
+  
+  button {
+    background: linear-gradient(to right, #4a00e0, #8e2de2); 
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+  }

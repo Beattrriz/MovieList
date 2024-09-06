@@ -4,11 +4,12 @@ import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { LoginResponse } from '../_models/login-response';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, ReactiveFormsModule],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
@@ -17,7 +18,9 @@ export class LoginComponent {
   password: string = '';
   errorMessage: string = '';
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService, 
+    private router: Router,) {}
 
   onSubmit() {
     this.authService.login(this.email, this.password).subscribe({
@@ -43,5 +46,9 @@ export class LoginComponent {
         this.errorMessage = 'Credenciais inválidas. Tente novamente.';
       }
     });
+  }
+
+  navigateToRegister() {
+    this.router.navigate(['/register']);
   }
 }
