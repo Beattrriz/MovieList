@@ -21,6 +21,9 @@ export class RegisterComponent {
     confirmPassword: '' 
   };
 
+  hidePassword: boolean = true;
+  hideConfirmPassword: boolean = true;
+
   constructor(private authService: AuthService, private router: Router) {}
 
   onSubmit() {
@@ -31,12 +34,20 @@ export class RegisterComponent {
 
     this.authService.register(this.user).subscribe({
       next: (response) => {
-        this.router.navigate(['/']);
+        this.router.navigate(['/login']);
       },
       error: (error) => {
         console.error('Erro ao registrar usuário:', error);
         alert('Ocorreu um erro ao tentar registrar o usuário. Tente novamente.');
       }
     });
+  }
+
+  togglePasswordVisibility(): void {
+    this.hidePassword = !this.hidePassword;
+  }
+
+  toggleConfirmPasswordVisibility(): void {
+    this.hideConfirmPassword = !this.hideConfirmPassword;
   }
 }

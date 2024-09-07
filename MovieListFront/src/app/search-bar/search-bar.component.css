@@ -10,7 +10,7 @@
   max-width: 600px; 
   padding: 0.5rem; 
   font-size: 1rem; 
-  border: 1px solid #cccccc; 
+  border: 1px solid #ccccccea; 
   border-radius: 4px; 
 }
 
@@ -45,6 +45,26 @@
   margin-top: 1rem;
 }
 
+.btn-link {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.bi-heart {
+  font-size: 1.5rem;
+  transition: color 0.3s ease;
+}
+
+.bi-heart-fill {
+  color: red;
+}
+
+.text-danger {
+  color: red;
+}
+
 .movie-grid {
   display: flex;
   flex-wrap: wrap;
@@ -66,6 +86,7 @@
   align-items: center;
 }
 
+
 .movie-poster {
   width: 100%;
   height: auto;
@@ -73,61 +94,48 @@
 }
 
 .movie-info {
-  padding: 10px;
-  text-align: center;
-  color: #e0e0e0; 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .movie-title {
-  font-size: 1.25rem;
-  margin: 0.5rem 0;
-}
-
-.movie-overview {
-  font-size: 0.875rem;
-  color: #b0b0b0; 
-  margin: 0.5rem 0;
+  margin: 0;
+  font-size: 1.5em;
+  text-align: center; 
 }
 
 .movie-details {
   display: flex;
+  flex-direction: column; 
+  align-items: center; 
+  margin-top: 10px;
+  width: 100%;
+}
+
+.movie-rating {
+  display: flex;
   align-items: center;
-  justify-content: space-between;
-  font-size: 0.875rem;
-  color: #b0b0b0;
+  justify-content: center; 
 }
 
-.movie-rating {
-  margin-right: 0.5rem;
+.movie-rating p {
+  margin: 0;
+  display: flex;
+  align-items: center;
 }
 
-.btn-link {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0;
+.movie-rating span {
+  margin-right: 10px;
 }
 
-.bi-heart {
-  font-size: 1.5rem;
-  transition: color 0.3s ease;
+.movie-rating .btn {
+  margin-left: 10px;
 }
 
-.text-danger {
-  color: red;
+.movie-rating .bi {
+  font-size: 1.2em;
 }
-
-.movie-rating {
-  bottom: 10px;
-  right: 0;
-  padding: 10px;
-}
-
-.movie-rating i {
-  font-size: 24px;
-  cursor: pointer;
-}
-
 
 @media (min-width: 992px) {
   .movie-grid {
@@ -135,7 +143,6 @@
     gap: 20px;
   }
 }
-
 
 @media (min-width: 768px) and (max-width: 991px) {
   .movie-grid {
@@ -150,5 +157,3 @@
     gap: 20px;
   }
 }
-
-

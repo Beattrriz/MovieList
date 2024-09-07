@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map, Observable, switchMap, throwError, using } from 'rxjs';
+import { catchError, map, Observable, switchMap, throwError, using } from 'rxjs';
 import { FavoriteMovie } from '../_models/favorite-movie.model';
 import { Movies } from '../_models/movies.model';
+import { ShareLinkResponse } from '../_models/shareLink.model';
 
 @Injectable({
   providedIn: 'root'
@@ -12,8 +13,8 @@ export class FavoriteMovieService {
 
   constructor(private http: HttpClient) {}
 
-  getUserFavorites(userId: number): Observable<number[]> {
-    return this.http.get<number[]>(`${this.apiUrl}/user/${userId}`);
+  getUserFavorites(userId: number): Observable<Movies[]> {
+    return this.http.get<Movies[]>(`${this.apiUrl}/user/${userId}`);
   }
 
   addFavoriteMovie(userId: number, movieId: number): Observable<void> {
@@ -25,15 +26,14 @@ export class FavoriteMovieService {
     return this.http.delete<void>(`${this.apiUrl}/remove?userId=${userId}&movieId=${movieId}`);
   }
 
-  toggleFavorite(movie: Movies, userId: number): Observable<void> {
+   toggleFavorite(movie: Movies, userId: number): Observable<void> {
     return this.getUserFavorites(userId).pipe(
-      switchMap(favoriteIds => {
-        const movieId = Number(movie.id);
-        const isFavorite = favoriteIds.includes(movieId);
+      switchMap(favorites => {
+        const isFavorite = favorites.some(f => f.id === movie.id);
         if (isFavorite) {
-          return this.removeFavoriteMovie(userId, movieId);
+          return this.removeFavoriteMovie(userId, movie.id);
         } else {
-          return this.addFavoriteMovie(userId, movieId);
+          return this.addFavoriteMovie(userId, movie.id);
         }
       })
     );
@@ -41,7 +41,7 @@ export class FavoriteMovieService {
 
   isFavorite(movie: Movies, userId: number): Observable<boolean> {
     return this.getUserFavorites(userId).pipe(
-      map(favoriteIds => favoriteIds.includes(Number(movie.id)))
+      map(favorites => favorites.some(f => f.id === movie.id))
     );
   }
 
@@ -49,9 +49,7 @@ export class FavoriteMovieService {
     return this.http.get<Movies>(`http://localhost:5017/api/Movies/${movieId}`);
   }
 
-  shareFavorites(userId: number): Observable<string> {
-    return this.http.get<{ ShareLink: string }>(`${this.apiUrl}/share/${userId}`).pipe(
-      map(response => response.ShareLink)
-    );
+  shareFavorites(userId: number): Observable<ShareLinkResponse> {
+    return this.http.get<ShareLinkResponse>(`${this.apiUrl}/share/${userId}`);
   }
 }

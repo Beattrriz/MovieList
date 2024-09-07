@@ -34,22 +34,51 @@
             <div *ngIf="email.errors?.['email']">O email deve ser válido.</div>
           </div>
         </div>
-        <div class="mb-3">
+        <div class="mb-3 position-relative">
           <label for="password" class="form-label">Senha</label>
-          <input type="password" id="password" class="form-control"
-                 [(ngModel)]="user.password" name="password"
-                 #password="ngModel" required
-                 [ngClass]="{'is-invalid': password.invalid && (password.dirty || password.touched)}">
+          <input 
+            [type]="hidePassword ? 'password' : 'text'" 
+            id="password" 
+            class="form-control"
+            [(ngModel)]="user.password" 
+            name="password"
+            #password="ngModel" 
+            required
+            [ngClass]="{'is-invalid': password.invalid && (password.dirty || password.touched)}"
+          >
+          <div class="position-absolute top-50 end-0 translate-middle-y pe-2">
+            <i 
+              class="bi" 
+              [ngClass]="hidePassword ? 'bi-eye-slash' : 'bi-eye'" 
+              (click)="togglePasswordVisibility()"
+              style="cursor: pointer;"
+            ></i>
+          </div>
           <div *ngIf="password.invalid && (password.dirty || password.touched)" class="invalid-feedback">
             A senha é obrigatória.
           </div>
         </div>
-        <div class="mb-3">
+
+        <div class="mb-3 position-relative">
           <label for="confirmPassword" class="form-label">Confirmar Senha</label>
-          <input type="password" id="confirmPassword" class="form-control"
-                 [(ngModel)]="user.confirmPassword" name="confirmPassword"
-                 #confirmPassword="ngModel" required
-                 [ngClass]="{'is-invalid': confirmPassword.invalid && (confirmPassword.dirty || confirmPassword.touched)}">
+          <input 
+            [type]="hideConfirmPassword ? 'password' : 'text'" 
+            id="confirmPassword" 
+            class="form-control"
+            [(ngModel)]="user.confirmPassword" 
+            name="confirmPassword"
+            #confirmPassword="ngModel" 
+            required
+            [ngClass]="{'is-invalid': confirmPassword.invalid && (confirmPassword.dirty || confirmPassword.touched)}"
+          >
+          <div class="position-absolute top-50 end-0 translate-middle-y pe-2">
+            <i 
+              class="bi" 
+              [ngClass]="hideConfirmPassword ? 'bi-eye-slash' : 'bi-eye'" 
+              (click)="toggleConfirmPasswordVisibility()"
+              style="cursor: pointer;"
+            ></i>
+          </div>
           <div *ngIf="confirmPassword.invalid && (confirmPassword.dirty || confirmPassword.touched)" class="invalid-feedback">
             A confirmação da senha é obrigatória.
           </div>

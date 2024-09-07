@@ -5,16 +5,20 @@ using System.Linq;
 using MovieListApi.Data;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using MovieListApi.DTOs;
 
 namespace MovieListApi.Services
 {
     public class FavoriteMovieService : IFavoriteMovieService
     {
         private readonly DataContext _context;
+
+        private readonly TmdbService _tmdbService;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public FavoriteMovieService(DataContext context, IHttpContextAccessor httpContextAccessor)
+        public FavoriteMovieService(TmdbService tmdbService, DataContext context, IHttpContextAccessor httpContextAccessor)
         {
+            _tmdbService = tmdbService;
             _context = context;
             _httpContextAccessor = httpContextAccessor;
         }
@@ -49,12 +53,31 @@ namespace MovieListApi.Services
             }
         }
 
-        public async Task<List<int>> GetUserFavorites(int userId)
+        public async Task<List<MovieDto>> GetUserFavorites(int userId)
         {
-            return await _context.FavoriteMovies
+            
+            var movieIds = await _context.FavoriteMovies
                 .Where(fm => fm.UserId == userId)
                 .Select(fm => fm.MovieId)
                 .ToListAsync();
+
+            if (movieIds == null || !movieIds.Any())
+            {
+                return new List<MovieDto>(); 
+            }
+
+            var movies = new List<MovieDto>();
+
+            foreach (var movieId in movieIds)
+            {
+                var movieDto = await _tmdbService.GetMovieByIdAsync(movieId);
+                if (movieDto != null)
+                {
+                    movies.Add(movieDto);
+                }
+            }
+
+            return movies;
         }
 
         public async Task<string> GenerateShareLink(int userId)

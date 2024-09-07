@@ -8,14 +8,14 @@ namespace MovieListApi.Controllers
     [ApiController]
     public class FavoriteMovieController : ControllerBase
     {
-         private readonly IFavoriteMovieService _favoriteMovieService;
+        private readonly IFavoriteMovieService _favoriteMovieService;
 
         public FavoriteMovieController(IFavoriteMovieService favoriteMovieService)
         {
             _favoriteMovieService = favoriteMovieService;
         }
 
-         [HttpPost("add")]
+        [HttpPost("add")]
         public async Task<IActionResult> AddFavoriteMovie([FromQuery] int userId, [FromQuery] int movieId)
         {
             await _favoriteMovieService.AddFavoriteMovie(userId, movieId);
@@ -33,6 +33,11 @@ namespace MovieListApi.Controllers
         public async Task<IActionResult> GetUserFavorites(int userId)
         {
             var favorites = await _favoriteMovieService.GetUserFavorites(userId);
+            if (favorites == null || !favorites.Any())
+            {
+                return NotFound("Nenhum favorito encontrado.");
+            }
+
             return Ok(favorites);
         }
 

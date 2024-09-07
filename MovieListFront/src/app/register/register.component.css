@@ -17,3 +17,23 @@ button:hover{
     background: linear-gradient(to right, #6a00b4, #9c2fd5); 
     border-color: #aaa; 
 }
+
+.position-absolute {
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 100%;
+    display: flex;
+    align-items: center; 
+  }
+  
+  input.form-control {
+    padding-right: 2.5rem; 
+  }
+  
+  .bi {
+    font-size: 1.2rem;
+    color: black;
+    cursor: pointer;
+    margin-top: 30px;
+  }

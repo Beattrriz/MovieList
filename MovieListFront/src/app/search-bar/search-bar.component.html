@@ -1,41 +1,75 @@
-<div class="search-container">
-  <input 
-    class="search-input" 
-    type="text" 
-    [(ngModel)]="query" 
-    placeholder="Pesquisar Filmes" 
-    (keyup.enter)="searchMovies()" 
-  />
-  <button class="search-button" (click)="searchMovies()">Buscar</button>
-</div>
+<div class="container mt-4">
+  <div class="search-bar-container">
+    <div class="search-container">
+      <input 
+        class="search-input" 
+        type="text" 
+        [(ngModel)]="query" 
+        placeholder="Pesquisar Filmes" 
+        (keyup.enter)="searchMovies()" 
+      />
+      <button class="search-button" (click)="searchMovies()">Buscar</button>
+    </div>
+  </div>
 
-<div *ngIf="isLoading" class="loading">Carregando...</div>
-<div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+  <div *ngIf="isLoading" class="loading">Carregando...</div>
+  <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
 
-<div *ngIf="!isLoading">
-  <div *ngIf="movies.length; else noResults" class="movie-grid">
-    <div *ngFor="let movie of movies" class="movie-card" (click)="goToMovieDetails(movie.id)">
-      <img *ngIf="movie.imageUrl" [src]="movie.imageUrl" alt="{{ movie.title }}" class="movie-poster">
-      <div class="movie-info">
-        <h3 class="movie-title">{{ movie.title }}</h3>
-        <div class="movie-details">
-          <div class="movie-rating">
-            <p>Nota TMDB: {{ movie.voteAverage }}</p>
-            <button (click)="toggleFavorite(movie); $event.stopPropagation()" class="btn btn-link">
-              <i class="bi" 
-                 [ngClass]="{ 
-                   'bi-heart-fill text-danger': (isFavorite(movie) | async), 
-                   'bi-heart': !(isFavorite(movie) | async) 
-                 }"></i>
-            </button>
+  <div *ngIf="!isLoading">
+    <div *ngIf="movies.length; else noResults">
+      <div class="movie-grid">
+        <div *ngFor="let movie of paginatedMovies" class="movie-card" (click)="goToMovieDetails(movie.id)">
+          <img 
+            [src]="movie.imageUrl ? movie.imageUrl : '/Default.png'" 
+            alt="{{ movie.title }}" 
+            class="movie-poster" 
+            data-bs-toggle="tooltip" 
+            data-bs-placement="top" 
+            title="Clique para mais detalhes"
+          >
+          <div class="movie-info">
+            <h3 class="movie-title">{{ movie.title }}</h3>
+            <div class="movie-details">
+              <div class="movie-rating">
+                <p>
+                  <span>Nota TMDB: {{ movie.voteAverage }}</span>
+                  <button 
+                    *ngIf="authService.isAuthenticated(); else loginPrompt"
+                    (click)="toggleFavorite(movie); $event.stopPropagation()"
+                    class="btn btn-link" 
+                    [ngClass]="{ 
+                      'bi-heart-fill text-danger': (isFavorite(movie) | async), 
+                      'bi-heart': !(isFavorite(movie) | async) 
+                    }" 
+                    [attr.title]="(isFavorite(movie) | async) ? 'Remover dos favoritos' : 'Adicionar aos favoritos'"
+                    data-bs-toggle="tooltip" 
+                    data-bs-placement="top"
+                  >
+                    <i class="bi"></i>
+                  </button>
+                  <ng-template #loginPrompt>
+                    <button 
+                      (click)="redirectToLogin()"
+                      class="btn btn-link" 
+                      [attr.title]="'Faça login para adicionar aos favoritos'"
+                      data-bs-toggle="tooltip" 
+                      data-bs-placement="top"
+                    >
+                      <i class="bi bi-heart"></i>
+                    </button>
+                  </ng-template>
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
+      <pagination-controls id="customPaginationId" (pageChange)="onPageChange($event)"></pagination-controls>
     </div>
+    <ng-template #noResults>
+      <div *ngIf="query">
+        Nenhum filme encontrado.
+      </div>
+    </ng-template>
   </div>
-  <ng-template #noResults>
-    <div *ngIf="query">
-      Nenhum filme encontrado.
-    </div>
-  </ng-template>
 </div>
