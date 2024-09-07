@@ -30,35 +30,8 @@
           <div class="movie-info">
             <h3 class="movie-title">{{ movie.title }}</h3>
             <div class="movie-details">
-              <div class="movie-rating">
-                <p>
-                  <span>Nota TMDB: {{ movie.voteAverage }}</span>
-                  <button 
-                    *ngIf="authService.isAuthenticated(); else loginPrompt"
-                    (click)="toggleFavorite(movie); $event.stopPropagation()"
-                    class="btn btn-link" 
-                    [ngClass]="{ 
-                      'bi-heart-fill text-danger': (isFavorite(movie) | async), 
-                      'bi-heart': !(isFavorite(movie) | async) 
-                    }" 
-                    [attr.title]="(isFavorite(movie) | async) ? 'Remover dos favoritos' : 'Adicionar aos favoritos'"
-                    data-bs-toggle="tooltip" 
-                    data-bs-placement="top"
-                  >
-                    <i class="bi"></i>
-                  </button>
-                  <ng-template #loginPrompt>
-                    <button 
-                      (click)="redirectToLogin()"
-                      class="btn btn-link" 
-                      [attr.title]="'Faça login para adicionar aos favoritos'"
-                      data-bs-toggle="tooltip" 
-                      data-bs-placement="top"
-                    >
-                      <i class="bi bi-heart"></i>
-                    </button>
-                  </ng-template>
-                </p>
+              <div class="movie-release-date">
+                <p>{{ formatReleaseDate(movie.releaseDate) }}</p>
               </div>
             </div>
           </div>

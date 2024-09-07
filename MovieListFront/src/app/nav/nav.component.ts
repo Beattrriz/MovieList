@@ -18,7 +18,7 @@ export class NavComponent implements OnInit {
   query: string = '';
   isLoading: boolean = false;
   errorMessage: string = '';
-  user$: Observable<User | null> = of(null); // Inicialize com Observable.of(null)
+  user$: Observable<User | null> = of(null); 
   user: User | null = null;
 
   constructor(
@@ -66,5 +66,11 @@ export class NavComponent implements OnInit {
     this.router.navigate(['/']).then(() => {
       window.location.reload(); 
     });
+  }
+
+  goHome() {
+    this.query = ''; 
+    this.movieSearchService.searchMovies('');
+    this.router.navigate(['/']); 
   }
 }

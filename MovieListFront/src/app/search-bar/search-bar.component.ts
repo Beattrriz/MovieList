@@ -31,7 +31,6 @@ export class SearchBarComponent implements OnInit, AfterViewInit {
   constructor(
     private movieSearchService: MovieSearchService,
     public authService: AuthService,
-    private favoriteService: FavoriteMovieService,
     private router: Router
   ) {}
 
@@ -39,6 +38,7 @@ export class SearchBarComponent implements OnInit, AfterViewInit {
     this.authService.getCurrentUserId().subscribe(
       id => {
         this.userId = id;
+        this.updateMoviesList(); 
       },
       error => {
         console.error('Erro ao obter o ID do usuário', error);
@@ -68,7 +68,7 @@ export class SearchBarComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.initializeTooltips(); 
+    this.initializeTooltips();
   }
 
   searchMovies() {
@@ -94,34 +94,19 @@ export class SearchBarComponent implements OnInit, AfterViewInit {
     this.updatePaginatedMovies();
   }
 
-  formatReleaseDate(date: string): string {
-    const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric' };
+  formatReleaseDate(date?: string): string {
+    if (!date) {
+      return 'Data não disponível'; 
+    }
+    const options: Intl.DateTimeFormatOptions = { year: 'numeric' }; 
     return new Date(date).toLocaleDateString(undefined, options);
   }
 
-  toggleFavorite(movie: Movies) {
-    if (this.authService.isAuthenticated() && this.userId !== null) {
-      this.favoriteService.toggleFavorite(movie, this.userId).subscribe(
-        () => {
-          this.updateMoviesList();
-        },
-        error => console.error('Erro ao atualizar favoritos', error)
-      );
-    } else {
-      this.redirectToLogin();
+  updateMoviesList() {
+    if (this.query.trim()) {
+      this.movieSearchService.searchMovies(this.query);
     }
   }
-
-  updateMoviesList() {
-    this.movieSearchService.searchMovies(this.query); 
-  }
-
-  isFavorite(movie: Movies): Observable<boolean> {
-  if (this.userId !== null) {
-    return this.favoriteService.isFavorite(movie, this.userId);
-  }
-  return of(false);
-}
 
   goToMovieDetails(movieId: number): void {
     this.router.navigate(['/movie', movieId]);

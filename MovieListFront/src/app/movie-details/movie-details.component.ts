@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FavoriteMovieService } from '../service/favorite-movie.service';
 import { AuthService } from '../service/auth.service';
 import { Movies } from '../_models/movies.model';
@@ -14,7 +14,7 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './movie-details.component.html',
   styleUrls: ['./movie-details.component.css']
 })
-export class MovieDetailsComponent implements OnInit {
+export class MovieDetailsComponent implements OnInit, AfterViewInit {
   movie$: Observable<Movies> | null = null;
   userId: number | null = null;
   isFavorite: boolean = false;
@@ -22,7 +22,8 @@ export class MovieDetailsComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private favoriteMovieService: FavoriteMovieService,
-    private authService: AuthService 
+    private authService: AuthService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -34,6 +35,11 @@ export class MovieDetailsComponent implements OnInit {
         this.checkIfFavorite(Number(movieId));
       }
     });
+  }
+
+  ngAfterViewInit(): void {
+    const tooltips = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+    tooltips.forEach(tooltip => new bootstrap.Tooltip(tooltip));
   }
 
   formatReleaseDate(date?: string | null): string {
@@ -57,6 +63,28 @@ export class MovieDetailsComponent implements OnInit {
       });
     } else {
       console.error('Usuário não autenticado');
+    }
+  }
+
+  redirectToLogin(): void {
+    this.router.navigate(['/login']); 
+  }
+
+  onFavoriteClick(movie: Movies): void {
+    if (this.userId !== null) {
+      this.toggleFavorite(movie);
+    } else {
+      this.redirectToLogin();
+    }
+  }
+
+  getTooltipText(): string {
+    if (this.userId === null) {
+      return 'Faça login para adicionar aos favoritos';
+    } else if (this.isFavorite) {
+      return 'Remover dos favoritos';
+    } else {
+      return 'Adicionar aos favoritos';
     }
   }
 }
