@@ -30,8 +30,8 @@
                  #email="ngModel" required
                  [ngClass]="{'is-invalid': email.invalid && (email.dirty || email.touched)}">
           <div *ngIf="email.invalid && (email.dirty || email.touched)" class="invalid-feedback">
-            <div *ngIf="email.errors?.['required']">O email é obrigatório.</div>
-            <div *ngIf="email.errors?.['email']">O email deve ser válido.</div>
+            <div *ngIf="email.errors?.['required']">O e-mail é obrigatório.</div>
+            <div *ngIf="email.errors?.['email']">Digite um e-mail válido.</div>
           </div>
         </div>
         <div class="mb-3 position-relative">
@@ -69,7 +69,7 @@
             name="confirmPassword"
             #confirmPassword="ngModel" 
             required
-            [ngClass]="{'is-invalid': confirmPassword.invalid && (confirmPassword.dirty || confirmPassword.touched)}"
+            [ngClass]="{'is-invalid': confirmPassword.invalid && (confirmPassword.dirty || confirmPassword.touched) || passwordsMismatch}"
           >
           <div class="position-absolute top-50 end-0 translate-middle-y pe-2">
             <i 
@@ -78,6 +78,9 @@
               (click)="toggleConfirmPasswordVisibility()"
               style="cursor: pointer;"
             ></i>
+          </div>
+          <div *ngIf="passwordsMismatch" class="invalid-feedback">
+            As senhas não correspondem.
           </div>
           <div *ngIf="confirmPassword.invalid && (confirmPassword.dirty || confirmPassword.touched)" class="invalid-feedback">
             A confirmação da senha é obrigatória.

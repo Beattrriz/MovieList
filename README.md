@@ -12,7 +12,7 @@ Esta aplicação de Lista de Filmes permite ao usuário:
 - **Integrada com a API do The Movie Database (TMDb)**, a aplicação exibe detalhes dos filmes, incluindo a nota (rating).
 - A aplicação conta com uma **tela inicial** onde o usuário pode pesquisar filmes por meio de uma barra de pesquisa.
   - Cada resultado é apresentado em um **card** que exibe a imagem do filme.
-  - Ao clicar na imagem, o usuário é levado para uma **tela com detalhes** do filme.
+  - Ao clicar na imagem, o usuário é levado para uma **tela com detalhes** do filme onde o usuário pode adicionar seu filme a sua lista de favoritos.
 - **Funcionalidades de Favoritos**:
   - Se o usuário estiver logado, pode adicionar o filme à sua lista de favoritos clicando no ícone de coração.
   - Para gerenciar os favoritos, a aplicação inclui **telas de registro e login**, permitindo que o usuário se registre e faça login para salvar seus filmes favoritos.

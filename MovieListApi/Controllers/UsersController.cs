@@ -121,6 +121,14 @@ namespace MovieListApi.Controllers
                 return BadRequest("As senhas não coincidem.");
             }
 
+            var existingUser = await _context.Users
+            .FirstOrDefaultAsync(u => u.Email == userDto.Email);
+
+            if (existingUser != null)
+            {
+                return BadRequest("O e-mail já está cadastrado.");
+            }
+
             var hashedPassword = HashPassword(userDto.Password);
 
             var user = new User
@@ -135,6 +143,7 @@ namespace MovieListApi.Controllers
             await _context.SaveChangesAsync();
             return CreatedAtAction(nameof(GetUser), new { id = user.Id }, user);
         }
+        
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateUser(int id, [FromBody] UserRegisterDto userDto)
         {

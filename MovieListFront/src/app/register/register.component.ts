@@ -4,6 +4,7 @@ import { AuthService } from '../service/auth.service';
 import { CreateUser } from '../_models/create-user.model';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-register',
@@ -13,41 +14,58 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
-  user:  CreateUser = {
+  user = {
     firstName: '',
     lastName: '',
     email: '',
     password: '',
-    confirmPassword: '' 
+    confirmPassword: ''
   };
-
-  hidePassword: boolean = true;
-  hideConfirmPassword: boolean = true;
-
+  hidePassword = true;
+  hideConfirmPassword = true;
+  passwordsMismatch = false;
+  
   constructor(private authService: AuthService, private router: Router) {}
-
+  
   onSubmit() {
-    if (this.user.password !== this.user.confirmPassword) {
-      alert('As senhas não correspondem.');
+    // Validar e-mail
+    if (!this.isValidEmail(this.user.email)) {
+      alert('Digite um e-mail válido.');
       return;
     }
-
+  
+    // Validar senhas
+    if (this.user.password !== this.user.confirmPassword) {
+      this.passwordsMismatch = true;
+      return;
+    }
+  
+    // Chamar o serviço de autenticação
     this.authService.register(this.user).subscribe({
       next: (response) => {
         this.router.navigate(['/login']);
       },
       error: (error) => {
         console.error('Erro ao registrar usuário:', error);
-        alert('Ocorreu um erro ao tentar registrar o usuário. Tente novamente.');
+        if (error.status === 400) {
+          alert('O e-mail já está cadastrado.');
+        } else {
+          alert('Ocorreu um erro ao tentar registrar o usuário. Tente novamente.');
+        }
       }
     });
   }
-
-  togglePasswordVisibility(): void {
+  
+  isValidEmail(email: string): boolean {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  }
+  
+  togglePasswordVisibility() {
     this.hidePassword = !this.hidePassword;
   }
-
-  toggleConfirmPasswordVisibility(): void {
+  
+  toggleConfirmPasswordVisibility() {
     this.hideConfirmPassword = !this.hideConfirmPassword;
   }
 }
