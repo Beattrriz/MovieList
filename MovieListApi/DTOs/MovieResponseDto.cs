@@ -28,7 +28,5 @@ namespace MovieListApi.DTOs
         [JsonProperty("release_date")]
         public string? ReleaseDate { get; set; }
         
-        [JsonProperty("genre_ids")]
-        public List<int>? GenreIds { get; set; }
     }
 }

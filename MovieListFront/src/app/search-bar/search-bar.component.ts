@@ -25,7 +25,7 @@ export class SearchBarComponent implements OnInit, AfterViewInit {
   userId: number | null = null;
   paginatedMovies: Movies[] = [];
   totalMovies: number = 0;
-  pageSize: number = 10;
+  pageSize: number = 9;
   p: number = 1;
 
   constructor(
@@ -113,7 +113,7 @@ export class SearchBarComponent implements OnInit, AfterViewInit {
   }
 
   updateMoviesList() {
-    this.movieSearchService.searchMovies(this.query); // Refaça a busca para atualizar a lista
+    this.movieSearchService.searchMovies(this.query); 
   }
 
   isFavorite(movie: Movies): Observable<boolean> {

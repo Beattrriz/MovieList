@@ -11,7 +11,6 @@ namespace MovieListApi.Services
     {
         private readonly HttpClient _httpClient;
         private readonly string _apiKey = "73de02dd53c0e4f2dc2a42773ba070cd";
-        private Dictionary<int, string>? _genreDictionary;
 
         public TmdbService(HttpClient httpClient)
         {
@@ -19,28 +18,8 @@ namespace MovieListApi.Services
             _httpClient.BaseAddress = new Uri("https://api.themoviedb.org/3/");
         }
 
-        private async Task EnsureGenresLoadedAsync()
-        {
-            if (_genreDictionary == null)
-            {
-                var genreResponse = await _httpClient.GetStringAsync($"genre/movie/list?api_key={_apiKey}&language=pt-BR");
-                var genresResponse = JsonConvert.DeserializeObject<GenreResponse>(genreResponse);
-
-                if (genresResponse?.Genres != null)
-                {
-                    _genreDictionary = genresResponse.Genres.ToDictionary(g => g.Id, g => g.Name);
-                }
-                else
-                {
-                    _genreDictionary = new Dictionary<int, string>();
-                }
-            }
-        }
-
         public async Task<List<MovieDto>> GetMoviesAsync(string query)
         {
-            await EnsureGenresLoadedAsync();
-
             var movieResponse = await _httpClient.GetStringAsync($"search/movie?api_key={_apiKey}&language=pt-BR&query={query}");
             var data = JsonConvert.DeserializeObject<MovieResponse>(movieResponse);
 
@@ -58,15 +37,12 @@ namespace MovieListApi.Services
                     : null,
                 Overview = movie.Overview,
                 VoteAverage = movie.VoteAverage,
-                ReleaseDate = movie.ReleaseDate,
-                Genres = movie.GenreIds // Apenas IDs dos gêneros
+                ReleaseDate = movie.ReleaseDate
             }).ToList();
         }
 
         public async Task<MovieDto> GetMovieByIdAsync(int id)
         {
-            await EnsureGenresLoadedAsync();
-
             var movieResponse = await _httpClient.GetStringAsync($"movie/{id}?api_key={_apiKey}&language=pt-BR");
             var movie = JsonConvert.DeserializeObject<Movie>(movieResponse);
 
@@ -84,8 +60,7 @@ namespace MovieListApi.Services
                     : null,
                 Overview = movie.Overview,
                 VoteAverage = movie.VoteAverage,
-                ReleaseDate = movie.ReleaseDate,
-                Genres = movie.GenreIds
+                ReleaseDate = movie.ReleaseDate
             };
         }
     }
