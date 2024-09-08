@@ -49,8 +49,9 @@ Antes de iniciar, certifique-se de ter as seguintes ferramentas instaladas:
 
 ## Acesso à Aplicação
 
-- **Front-End:** [https://your-project.vercel.app](https://your-project.vercel.app)
-- **Back-End:** [https://api.your-project.com](https://api.your-project.com)
+- **Front-End:** (http://localhost:4200/)
+- **Back-End:** o Banco dadados foi alocado na nuvem da plataforma AZURE e ja foi configurado no back and
+  (swagger para ve4rificação da API http://localhost:5017/swagger/index.html)
 
 O front-end e o back-end estão configurados para funcionar em conjunto. O front-end pode fazer requisições para a API do back-end diretamente.
 
