@@ -74,7 +74,7 @@ O front-end e o back-end estão configurados para funcionar em conjunto. O front
     dotnet restore
     dotnet run
 
-A API estará disponível em `https://localhost:5017`, a menos que especificado de outra forma no `launchSettings.json` ou nas configurações do projeto.
+A API estará disponível em `https://localhost:5001`, a menos que especificado de outra forma no `launchSettings.json` ou nas configurações do projeto.
 
 4. **Configuração de Variáveis de Ambiente:**
 
@@ -125,9 +125,15 @@ No front-end, você pode precisar configurar a URL base da API no arquivo `src/e
     ```typescript
     export const environment = {
       production: false,
-      apiUrl: 'https://localhost:5017/api'
+      apiUrl: 'https://localhost:5001/api'
     };
     ```
+## Recursos de Imagem
+
+As seguintes imagens foram utilizadas neste projeto:
+
+- **Imagem Default**: A imagem padrão foi obtida de [FavPNG](https://favpng.com/).
+- **Ícone Favicon**: O ícone de favicon foi obtido de [Flaticon](https://www.flaticon.com/).
 
 ## Contato
 

@@ -34,7 +34,7 @@ export class SearchBarComponent implements OnInit, AfterViewInit {
     private router: Router
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.authService.getCurrentUserId().subscribe(
       id => {
         this.userId = id;
@@ -53,11 +53,13 @@ export class SearchBarComponent implements OnInit, AfterViewInit {
         this.updatePaginatedMovies();
         this.isLoading = false;
         this.errorMessage = movies.length === 0 && this.query ? 'Nenhum filme encontrado.' : '';
+        this.query = '';
       },
       error => {
         this.isLoading = false;
         this.errorMessage = 'Erro ao buscar filmes.';
         console.error('Erro ao buscar filmes', error);
+        this.query = '';
       }
     );
   }

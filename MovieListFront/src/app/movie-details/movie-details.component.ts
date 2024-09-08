@@ -60,6 +60,8 @@ export class MovieDetailsComponent implements OnInit, AfterViewInit {
     if (this.userId !== null) {
       this.favoriteMovieService.toggleFavorite(movie, this.userId).subscribe(() => {
         this.isFavorite = !this.isFavorite;
+      }, error => {
+        console.error('Erro ao alternar favorito', error);
       });
     } else {
       console.error('Usuário não autenticado');

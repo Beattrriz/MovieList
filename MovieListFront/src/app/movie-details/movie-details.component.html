@@ -1,32 +1,35 @@
 <div style="text-align: center; margin-top: 60px;">
   <h2>Detalhes do Filme</h2>
 
-  <div *ngIf="movie$ | async as movie" style="display: flex; align-items: center; justify-content: center; margin-bottom: 20px; padding: 10px; border: 1px solid #ddd; border-radius: 8px;">
-    <img *ngIf="movie.imageUrl" [src]="movie.imageUrl" alt="{{ movie.title }}" style="width: 250px; height: auto; margin-right: 20px; border-radius: 4px;" />
+  <div *ngIf="movie$ | async as movie" 
+       style="display: flex; align-items: center; justify-content: center; margin-bottom: 20px; padding: 10px; border: 1px solid #ddd; border-radius: 8px;">
+    <img *ngIf="movie.imageUrl" 
+         [src]="movie.imageUrl" 
+         alt="{{ movie.title }}" 
+         style="width: 250px; height: auto; margin-right: 20px; border-radius: 4px;" />
 
     <div style="flex: 1; text-align: left;">
       <h3>{{ movie.title }}</h3>
       <p><strong>Data de Lançamento:</strong> {{ formatReleaseDate(movie.releaseDate) }}</p>
       <p><strong>Sinopse:</strong></p>
-      <p>
-        {{ movie.overview ? movie.overview : 'Descrição não disponível.' }}
-      </p>
+      <p>{{ movie.overview ? movie.overview : 'Descrição não disponível.' }}</p>
 
       <div class="remove" style="display: flex; align-items: center; margin-top: 10px;">
         <p><strong>Nota TMDB:</strong> {{ movie.voteAverage | number:'1.1-1' }}</p>
-        <button (click)="onFavoriteClick(movie)" class="remove-button" style="margin-left: 20px;">
-          <i
-            class="bi"
-            [ngClass]="{
-              'bi-heart': !isFavorite,
-              'bi-heart-fill': isFavorite,
-              'text-danger': isFavorite,
-              'text-secondary': !isFavorite
-            }"
-            [attr.data-bs-toggle]="userId !== null ? 'tooltip' : null"
-            [attr.data-bs-placement]="'top'"
-            [attr.title]="getTooltipText()"
-          ></i>
+        <button (click)="onFavoriteClick(movie)" 
+                class="remove-button" 
+                style="margin-left: 20px;">
+          <i class="bi" 
+             [ngClass]="{
+               'bi-heart': !isFavorite,
+               'bi-heart-fill': isFavorite,
+               'text-danger': isFavorite,
+               'text-secondary': !isFavorite
+             }"
+             [attr.data-bs-toggle]="userId !== null ? 'tooltip' : null"
+             [attr.data-bs-placement]="'top'"
+             [attr.title]="getTooltipText()">
+          </i>
         </button>
       </div>
     </div>

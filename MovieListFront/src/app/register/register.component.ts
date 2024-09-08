@@ -28,19 +28,16 @@ export class RegisterComponent {
   constructor(private authService: AuthService, private router: Router) {}
   
   onSubmit() {
-    // Validar e-mail
     if (!this.isValidEmail(this.user.email)) {
       alert('Digite um e-mail válido.');
       return;
     }
-  
-    // Validar senhas
+
     if (this.user.password !== this.user.confirmPassword) {
       this.passwordsMismatch = true;
       return;
     }
-  
-    // Chamar o serviço de autenticação
+
     this.authService.register(this.user).subscribe({
       next: (response) => {
         this.router.navigate(['/login']);
