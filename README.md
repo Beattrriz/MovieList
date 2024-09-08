@@ -29,6 +29,7 @@ A motivação para este projeto é criar uma aplicação robusta e escalável qu
 - **Banco de Dados:** SQL Server
   - Os registros de usuários e suas listas de filmes favoritos são persistidos no SQL Server.
   - O Entity Framework Core é utilizado para mapeamento objeto-relacional (ORM) e gerenciamento do banco de dados, facilitando a integração entre a aplicação e o SQL Server.
+  - O banco foi adicionado a nuvem do Azure.
 - **Autenticação:** JWT (JSON Web Tokens)
 - **Integração de APIs:** API do The Movie Database (TMDb)
 
@@ -36,6 +37,7 @@ A motivação para este projeto é criar uma aplicação robusta e escalável qu
 
 Antes de iniciar, certifique-se de ter as seguintes ferramentas instaladas:
 
+- Visual Studio Code
 - .NET 7.0 ou superior
 - Node.js (versão 16+ recomendada)
 - npm
