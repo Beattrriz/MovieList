@@ -23,10 +23,10 @@ jobs:
           include-prerelease: true
 
       - name: Build with dotnet
-        run: dotnet build --configuration Release
+        run: dotnet build MovieListAPI/MovieListAPI.csproj --configuration Release
 
       - name: dotnet publish
-        run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
+        run: dotnet publish MovieListAPI/MovieListAPI.csproj -c Release -o ${{env.DOTNET_ROOT}}/myapp
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
@@ -54,4 +54,4 @@ jobs:
           app-name: 'MovieList-API'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_1CEA24EFDDDD4AC1995D28312D38BC72 }}
-          package: .
+          package: ${{env.DOTNET_ROOT}}/myapp
