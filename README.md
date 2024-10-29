@@ -143,6 +143,7 @@ As seguintes imagens foram utilizadas neste projeto:
 Para questões, bugs ou sugestões, entre em contato:
 
 [![Gmail](https://img.shields.io/badge/Gmail-FF0000?style=flat&logo=gmail&logoColor=white)](byalt1228@gmail.com)
+<<<<<<< HEAD
 
 ### Imagens do Layout
 
@@ -151,3 +152,5 @@ Para questões, bugs ou sugestões, entre em contato:
 ![Página de Favoritos](./imagens/favoritos.png)
 ![Página de Login](./imagens/login.png)
 ![Pagina de Registro](./imagens/registro.png)
+=======
+>>>>>>> f0d9da44248acc8897ecffd519240b3b3d74de1d
