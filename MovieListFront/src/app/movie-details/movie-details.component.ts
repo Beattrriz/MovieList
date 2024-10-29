@@ -27,13 +27,15 @@ export class MovieDetailsComponent implements OnInit, AfterViewInit {
   ) {}
 
   ngOnInit(): void {
+    const movieId = this.route.snapshot.paramMap.get('id');
+    if (movieId) {
+      this.movie$ = this.favoriteMovieService.getMovieDetails(Number(movieId));
+      this.checkIfFavorite(Number(movieId));
+    }
+  
+    // Garantir que o ID do usuário seja carregado, mas não afetar a exibição dos detalhes do filme
     this.authService.getCurrentUserId().subscribe(userId => {
       this.userId = userId;
-      const movieId = this.route.snapshot.paramMap.get('id');
-      if (movieId) {
-        this.movie$ = this.favoriteMovieService.getMovieDetails(Number(movieId));
-        this.checkIfFavorite(Number(movieId));
-      }
     });
   }
 
@@ -53,6 +55,9 @@ export class MovieDetailsComponent implements OnInit, AfterViewInit {
       this.favoriteMovieService.isFavorite({ id: movieId } as Movies, this.userId).subscribe(isFavorite => {
         this.isFavorite = isFavorite;
       });
+    }
+    else {
+      this.isFavorite = false;
     }
   }
 

@@ -29,6 +29,7 @@ A motivação para este projeto é criar uma aplicação robusta e escalável qu
 - **Banco de Dados:** SQL Server
   - Os registros de usuários e suas listas de filmes favoritos são persistidos no SQL Server.
   - O Entity Framework Core é utilizado para mapeamento objeto-relacional (ORM) e gerenciamento do banco de dados, facilitando a integração entre a aplicação e o SQL Server.
+  - O banco foi adicionado a nuvem do Azure.
 - **Autenticação:** JWT (JSON Web Tokens)
 - **Integração de APIs:** API do The Movie Database (TMDb)
 
@@ -36,8 +37,9 @@ A motivação para este projeto é criar uma aplicação robusta e escalável qu
 
 Antes de iniciar, certifique-se de ter as seguintes ferramentas instaladas:
 
+- Visual Studio Code
 - .NET 7.0 ou superior
-- Node.js (versão 16+ recomendada)
+- Node.js (versão 18+ recomendada)
 - npm
 - Git
 - bootstrap 5.3 ou superior
@@ -49,8 +51,9 @@ Antes de iniciar, certifique-se de ter as seguintes ferramentas instaladas:
 
 ## Acesso à Aplicação
 
-- **Front-End:** [https://your-project.vercel.app](https://your-project.vercel.app)
-- **Back-End:** [https://api.your-project.com](https://api.your-project.com)
+- **Front-End:** (http://localhost:4200/)
+- **Back-End:** o Banco dadados foi alocado na nuvem da plataforma AZURE e ja foi configurado no back and
+  (swagger para ve4rificação da API http://localhost:5017/swagger/index.html)
 
 O front-end e o back-end estão configurados para funcionar em conjunto. O front-end pode fazer requisições para a API do back-end diretamente.
 
@@ -74,7 +77,7 @@ O front-end e o back-end estão configurados para funcionar em conjunto. O front
     dotnet restore
     dotnet run
 
-A API estará disponível em `https://localhost:5001`, a menos que especificado de outra forma no `launchSettings.json` ou nas configurações do projeto.
+A API estará disponível em `https://localhost:5017`, a menos que especificado de outra forma no `launchSettings.json` ou nas configurações do projeto.
 
 4. **Configuração de Variáveis de Ambiente:**
 
@@ -125,7 +128,7 @@ No front-end, você pode precisar configurar a URL base da API no arquivo `src/e
     ```typescript
     export const environment = {
       production: false,
-      apiUrl: 'https://localhost:5001/api'
+      apiUrl: 'https://localhost:5017/api'
     };
     ```
 ## Recursos de Imagem
@@ -140,3 +143,11 @@ As seguintes imagens foram utilizadas neste projeto:
 Para questões, bugs ou sugestões, entre em contato:
 
 [![Gmail](https://img.shields.io/badge/Gmail-FF0000?style=flat&logo=gmail&logoColor=white)](byalt1228@gmail.com)
+
+### Imagens do Layout
+
+![Página Home](./imagens/home.png)
+![Página de Detalhes](./imagens/detalhes.png)
+![Página de Favoritos](./imagens/favoritos.png)
+![Página de Login](./imagens/login.png)
+![Pagina de Registro](./imagens/registro.png)

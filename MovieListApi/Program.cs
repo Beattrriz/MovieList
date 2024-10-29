@@ -60,7 +60,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowSpecificOrigins",
         policyBuilder =>
         {
-            policyBuilder.WithOrigins("http://localhost:4200")
+            policyBuilder.WithOrigins("http://localhost:4200", "apimoviedeploy-gkb7cfe7fqade3db.brazilsouth-01.azurewebsites.net")
                          .AllowAnyHeader()
                          .AllowAnyMethod();
         });
