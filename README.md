@@ -29,7 +29,6 @@ A motivação para este projeto é criar uma aplicação robusta e escalável qu
 - **Banco de Dados:** SQL Server
   - Os registros de usuários e suas listas de filmes favoritos são persistidos no SQL Server.
   - O Entity Framework Core é utilizado para mapeamento objeto-relacional (ORM) e gerenciamento do banco de dados, facilitando a integração entre a aplicação e o SQL Server.
-  - O banco foi adicionado a nuvem do Azure.
 - **Autenticação:** JWT (JSON Web Tokens)
 - **Integração de APIs:** API do The Movie Database (TMDb)
 
@@ -143,7 +142,7 @@ As seguintes imagens foram utilizadas neste projeto:
 Para questões, bugs ou sugestões, entre em contato:
 
 [![Gmail](https://img.shields.io/badge/Gmail-FF0000?style=flat&logo=gmail&logoColor=white)](byalt1228@gmail.com)
-<<<<<<< HEAD
+
 
 ### Imagens do Layout
 
@@ -153,4 +152,4 @@ Para questões, bugs ou sugestões, entre em contato:
 ![Página de Login](./imagens/login.png)
 ![Pagina de Registro](./imagens/registro.png)
 =======
->>>>>>> f0d9da44248acc8897ecffd519240b3b3d74de1d
+
